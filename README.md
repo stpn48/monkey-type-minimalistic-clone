@@ -1,17 +1,13 @@
-# Project Dependencies
+# Monkey Type Really Minimalistic clone
 
-This project utilizes the following key dependencies:
+A typing practice application inspired by popular typing tools. This project is for **educational purposes only** and is not intended for commercial use. All content, resources, and assets are original or used within the bounds of fair use for learning and development.
 
-- **Bun**: A fast all-in-one JavaScript runtime and package manager.
-- **React Hot Toast**: A customizable toast notification library for React.
-- **Lucide React**: A collection of open-source icons for React applications.
-- **Prettier**: An opinionated code formatter for maintaining consistent code style.
-- **Prettier Plugin Tailwind CSS**: A Prettier plugin for sorting Tailwind CSS classes.
-- **ShadCN**: A UI component library built with Radix UI and Tailwind CSS.
+## Features
 
-## Updating Dependencies
+- **Typing Practice**: Improve your typing speed and accuracy with various practice sessions.
+- **Progress Tracking**: Visual feedback on typing progress, including words-per-minute (WPM) and accuracy.
+- **Customizable Settings**: Tailor your practice sessions with options for difficulty, themes, and text sources.
 
-To ensure that all dependencies are up to date, run the following command:
+## Disclaimer
 
-```bash
-bun upgrade
+This project is **not affiliated with or endorsed by any other typing tool**.
