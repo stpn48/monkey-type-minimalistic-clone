@@ -1,9 +1,9 @@
-import { ConfigBar } from "@/app/components/configBar/config-bar";
 import { TypingField } from "@/app/components/typing-field";
+import { ConfigBar } from "./config-bar/config-bar";
 
 export function MainContent() {
   return (
-    <main className="w-full">
+    <main className="flex h-full w-full flex-col gap-16">
       <ConfigBar />
       <TypingField />
     </main>
