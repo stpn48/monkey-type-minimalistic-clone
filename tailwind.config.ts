@@ -9,10 +9,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        "geist-mono": ["var(--font-geist-mono)", "monospace"],
+        "geist-sans": ["var(--font-geist-sans)", "sans-serif"],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        text: "var(--text)",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: "hsl(var(--primary))",
+        logoText: "hsl(var(--logoText))",
+        text: "hsl(var(--text))",
       },
     },
   },
