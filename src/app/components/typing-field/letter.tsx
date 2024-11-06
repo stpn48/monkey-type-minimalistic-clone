@@ -1,21 +1,22 @@
 import { twMerge } from "tailwind-merge";
 
 type Props = {
-  char: string;
-  isCorrect: boolean | null;
+  letter: string;
+  userLetter: string;
 };
 
-export function Letter({ char, isCorrect }: Props) {
+export function Letter({ letter, userLetter }: Props) {
   return (
     <span
       className={twMerge(
         "font-geist-mono text-3xl",
-        isCorrect === true && "text-primary",
-        isCorrect === false && "text-red-600",
-        isCorrect === null && "text-text",
+        userLetter === letter && "text-primary",
+        userLetter !== letter && "text-red-600",
+        userLetter === "" && "text-text",
+        userLetter === "overflow-letter" && "text-red-800",
       )}
     >
-      {char}
+      {letter}
     </span>
   );
 }
