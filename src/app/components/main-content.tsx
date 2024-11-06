@@ -1,4 +1,4 @@
-import { TypingField } from "@/app/components/typing-field";
+import { TypingField } from "@/app/components/typing-field/typing-field";
 import { ConfigBar } from "./config-bar/config-bar";
 
 export function MainContent() {
