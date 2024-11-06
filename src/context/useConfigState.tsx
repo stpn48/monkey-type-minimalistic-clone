@@ -2,7 +2,8 @@
 
 import { modeParser, quoteLengthParser } from "@/nuqs/parsers";
 import { Options, parseAsBoolean, parseAsInteger, useQueryState } from "nuqs";
-import { createContext, PropsWithChildren, useContext, useMemo } from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from "react";
+import { useTypingField } from "./use-typing-field";
 
 export type Mode = "time" | "wordCount" | "quote";
 export type QuoteLength = "short" | "medium" | "long";
@@ -27,6 +28,8 @@ type ContextType = {
 const ConfigStateContext = createContext<ContextType | null>(null);
 
 export function ConfigStateProvider({ children }: PropsWithChildren) {
+  const { resetTypingField } = useTypingField();
+
   const [mode, setMode] = useQueryState("mode", modeParser.withDefault("time"));
   const [includePunctuation, setIncludePunctuation] = useQueryState(
     "includePunctuation",
@@ -36,6 +39,10 @@ export function ConfigStateProvider({ children }: PropsWithChildren) {
   const [timeDuration, setTimeDuration] = useQueryState("timeDuration", parseAsInteger.withDefault(15));
   const [wordCount, setWordCount] = useQueryState("wordCount", parseAsInteger.withDefault(15));
   const [quoteLength, setQuoteLength] = useQueryState("quoteLength", quoteLengthParser.withDefault("short"));
+
+  useEffect(() => {
+    resetTypingField();
+  }, [mode, includePunctuation, includeNumbers, timeDuration, wordCount, quoteLength]);
 
   const value = useMemo(() => {
     return {
