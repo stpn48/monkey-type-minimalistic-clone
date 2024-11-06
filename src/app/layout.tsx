@@ -1,5 +1,5 @@
+import { Providers } from "@/components/providers";
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -26,10 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider defaultTheme="light" attribute="class" themes={["light", "dark", "vercel"]}>
-          {children}
-        </ThemeProvider>
+      <body
+        className={`${geistSans.variable} bg-background font-geist-sans text-sm font-medium text-text ${geistMono.variable} antialiased`}
+      >
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
