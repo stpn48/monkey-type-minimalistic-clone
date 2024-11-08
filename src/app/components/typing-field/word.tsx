@@ -4,13 +4,14 @@ import React from "react";
 type Props = {
   word: string;
   userWord: string;
+  wordIndex: number;
 };
 
 const MemoLetter = React.memo(Letter);
 
-export function Word({ word, userWord }: Props) {
+export function Word({ word, userWord, wordIndex }: Props) {
   return (
-    <div>
+    <div className={`word-${wordIndex}`}>
       {Array.from(word).map((letter, letterIndex) => {
         return (
           <MemoLetter key={letterIndex} letter={letter} userLetter={userWord[letterIndex] || ""} />
