@@ -2,26 +2,18 @@ import { useTypingField } from "@/context/use-typing-field";
 import { Mode } from "@/context/useConfigState";
 import { useCallback, useEffect } from "react";
 
-export function useKeyHandlers(
-  mode: Mode,
-  timeoutId: NodeJS.Timeout | null,
-  startTimer: () => void,
-  words: string[],
-) {
+export function useKeyHandlers(mode: Mode, words: string[]) {
   const {
     setUserWords,
     setActiveLetterIndex,
     activeLetterIndex,
     activeWordIndex,
     setActiveWordIndex,
+    setCurrRow,
   } = useTypingField();
 
   const handleLetterKey = useCallback(
     (e: KeyboardEvent) => {
-      if (mode === "time" && !timeoutId) {
-        startTimer();
-      }
-
       //  add letter to active word, and move to next letter
       setUserWords((prev) => {
         const updatedWords = [...prev];
@@ -31,12 +23,23 @@ export function useKeyHandlers(
       });
       setActiveLetterIndex((prev) => prev + 1);
     },
-    [setUserWords, activeWordIndex, mode, timeoutId, startTimer],
+    [setUserWords, activeWordIndex, mode],
   );
 
   const handleSpaceKey = useCallback(() => {
     // if user is at the end or beyond the end of the word and clicks space, move to next word
     if (activeLetterIndex >= words[activeWordIndex].length) {
+      // get the currWord and next word
+      const currWord = document.querySelector(`.word-${activeWordIndex}`) as HTMLElement;
+      const nextWord = document.querySelector(`.word-${activeWordIndex + 1}`) as HTMLElement;
+
+      if (!currWord || !nextWord) throw new Error("Could not find current or next word");
+
+      // if next word is lower than the current word its on a new row
+      if (nextWord.offsetTop > currWord.offsetTop) {
+        setCurrRow((prev) => prev + 1);
+      }
+
       setUserWords((prev) => [...prev, ""]);
       setActiveWordIndex((prev) => prev + 1);
       setActiveLetterIndex(0);
