@@ -8,7 +8,10 @@ import { useTypingField } from "./use-typing-field";
 export type Mode = "time" | "wordCount" | "quote";
 export type QuoteLength = "short" | "medium" | "long";
 
-type UpdateStateFunction<T> = (value: T | ((old: T) => T | null) | null, options?: Options) => Promise<URLSearchParams>;
+type UpdateStateFunction<T> = (
+  value: T | ((old: T) => T | null) | null,
+  options?: Options,
+) => Promise<URLSearchParams>;
 
 type ContextType = {
   mode: Mode;
@@ -35,10 +38,19 @@ export function ConfigStateProvider({ children }: PropsWithChildren) {
     "includePunctuation",
     parseAsBoolean.withDefault(false),
   );
-  const [includeNumbers, setIncludeNumbers] = useQueryState("includeNumbers", parseAsBoolean.withDefault(false));
-  const [timeDuration, setTimeDuration] = useQueryState("timeDuration", parseAsInteger.withDefault(15));
-  const [wordCount, setWordCount] = useQueryState("wordCount", parseAsInteger.withDefault(15));
-  const [quoteLength, setQuoteLength] = useQueryState("quoteLength", quoteLengthParser.withDefault("short"));
+  const [includeNumbers, setIncludeNumbers] = useQueryState(
+    "includeNumbers",
+    parseAsBoolean.withDefault(false),
+  );
+  const [timeDuration, setTimeDuration] = useQueryState(
+    "timeDuration",
+    parseAsInteger.withDefault(15),
+  );
+  const [wordCount, setWordCount] = useQueryState("wordCount", parseAsInteger.withDefault(10));
+  const [quoteLength, setQuoteLength] = useQueryState(
+    "quoteLength",
+    quoteLengthParser.withDefault("short"),
+  );
 
   useEffect(() => {
     resetTypingField();
