@@ -4,9 +4,9 @@ import { Settings, UserRound } from "lucide-react";
 export function Header() {
   return (
     <header className="flex w-full">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Logo />
-        <h1 className="text-logoText text-2xl font-bold">Type</h1>
+        <h1 className="text-2xl font-bold text-logoText">Type</h1>
       </div>
 
       <div className="flex-1" />
