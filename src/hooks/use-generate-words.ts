@@ -1,25 +1,34 @@
 import { useConfigState } from "@/context/useConfigState";
-import { generate as generateWords } from "random-words";
-import { useEffect, useState } from "react";
+import { generate as generateRandomWords } from "random-words";
+import { useCallback, useEffect, useState } from "react";
+import { useHandleTimeMode } from "./use-infinite-words";
 
 export function useGenerateWords() {
   const [words, setWords] = useState<string[]>([]);
-  const { mode, wordCount, timeDuration } = useConfigState();
+  const { mode, wordCount } = useConfigState();
 
-  useEffect(() => {
-    if (mode === "wordCount") {
-      const words = generateWords(wordCount) as string[];
-      setWords(words);
-    }
-  }, [wordCount, mode]);
+  const generateWords = useCallback((wordCount: number) => {
+    const generatedWords = generateRandomWords(wordCount) as string[];
+    setWords(generatedWords);
+  }, []);
 
-  // generate 20 words when user changes time
+  useHandleTimeMode(setWords, mode);
+
+  // generate initial words
   useEffect(() => {
-    if (mode === "time") {
-      const words = generateWords(20) as string[];
-      setWords(words);
+    switch (mode) {
+      case "wordCount":
+        generateWords(wordCount);
+        break;
+
+      case "time":
+        generateWords(30);
+        break;
+
+      case "quote":
+        break;
     }
-  }, [timeDuration, mode]);
+  }, [mode, wordCount]);
 
   return { words };
 }
