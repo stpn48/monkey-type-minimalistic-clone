@@ -5,28 +5,23 @@
 @layer base {
   /* Light Theme */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 93%;
-    --primary: 0 0% 0%;
-    --logoText: 0 0% 0%;
-    --text: 0 0% 50%;
+    --background: 0 0% 93%;
+    --foreground: 0 0% 87%;
+    --primary: 0 0% 24%;
+    --text: 0 0% 70%;
+    --text-primary: 0 0% 27%;
+    --incorrect-text: 0 100% 42%;
+    --incorrect-text-overflow: 0 100% 35%;
   }
 
   /* Dark Theme */
   .dark {
-    --background: 0 0% 9%;
-    --foreground: 0 0% 0%;
-    --primary: 0 0% 100%;
-    --logoText: 0 0% 100%;
-    --text: 0 0% 50%;
-  }
-
-  /* Vercel Theme */
-  .vercel {
-    --background: 0 0% 7%; /* Customize as needed */
-    --foreground: 0 0% 0%; /* Customize as needed */
-    --primary: 221 83% 53%;
-    --logoText: 0 0% 100%;
-    --text: 0 0% 96%;
+    --background: 0 0% 11%;
+    --foreground: 0 0% 14%;
+    --primary: 50 43% 78%;
+    --text: 0 0% 27%;
+    --text-primary: 45 29% 96%;
+    --incorrect-text: 0 33% 53%;
+    --incorrect-text-overflow: 14 58% 19%;
   }
 }

@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 
 export function Providers({ children }: PropsWithChildren) {
   return (
-    <ThemeProvider defaultTheme="light" attribute="class" themes={["light", "dark", "vercel"]}>
+    <ThemeProvider defaultTheme="light" attribute="class" themes={["light", "dark"]}>
       <ReactQueryProvider>
         <NuqsAdapter>
           <ConfigStateProvider>{children}</ConfigStateProvider>

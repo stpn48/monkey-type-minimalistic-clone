@@ -1,8 +1,6 @@
 import { useTypingField } from "@/context/use-typing-field";
 import { Mode } from "@/context/useConfigState";
-import { useCallback, useEffect, useRef, useState } from "react";
-
-let timeoutId: NodeJS.Timeout | null = null;
+import { useCallback, useEffect, useRef } from "react";
 
 export function useKeyHandlers(mode: Mode, words: string[]) {
   const {
@@ -16,20 +14,18 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
     setStartTimer,
     setUserTyping,
     startTimer,
-    userTyping,
   } = useTypingField();
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const capsLockStateInitialized = useRef<boolean>(false);
 
   const handleLetterKey = useCallback(
     (e: KeyboardEvent) => {
-      // start timer if mode is type and timer is not started
+      // start timer if mode is time and timer is not started
       if (mode === "time" && !startTimer) {
         setStartTimer(true);
       }
-
-      setUserTyping(true);
-      //  add letter to active word, and move to next letter
+      // add letter to active word, and move to next letter
       setUserWords((prev) => {
         const updatedWords = [...prev];
         const updatedWord = updatedWords[activeWordIndex] + e.key;
@@ -92,6 +88,7 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
 
   const handleKeydown = useCallback(
     (e: KeyboardEvent) => {
+      handleUserTyping();
       // all letters and symbols regex
       if (/[\p{L}\p{S}\p{P}]/u.test(e.key) && e.key.length === 1) {
         handleLetterKey(e);
@@ -103,6 +100,16 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
     },
     [handleLetterKey, handleSpaceKey, handleBackspaceKey, setCapsLockActive],
   );
+
+  const handleUserTyping = useCallback(() => {
+    setUserTyping(true);
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      setUserTyping(false);
+    }, 750);
+  }, [timeoutRef.current, setUserTyping]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeydown);
@@ -119,17 +126,4 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
       });
     };
   }, [handleKeydown, handleFirstKeyTyped]);
-
-  // user is not typing anymore
-  useEffect(() => {
-    if (!userTyping) return;
-
-    timeoutId = setTimeout(() => {
-      setUserTyping(false);
-    }, 2000);
-
-    return () => {
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, [userTyping]);
 }

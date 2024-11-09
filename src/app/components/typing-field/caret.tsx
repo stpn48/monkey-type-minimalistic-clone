@@ -15,7 +15,7 @@ export function Caret({ ...props }: React.HTMLAttributes<HTMLSpanElement>) {
       ref={caretRef}
       {...props}
       className={twMerge(
-        "absolute h-[36px] w-[3px] rounded-full bg-primary transition-opacity duration-[300ms] ease-in-out",
+        "absolute h-[36px] w-[2.5px] rounded-full bg-primary transition-all duration-[95ms] ease-out",
         !userTyping && "animate-caretFlashSmooth",
       )}
     />

@@ -29,7 +29,6 @@ export function ToggleThemeButton({ className }: Props) {
     <select className="bg-background" onChange={toggleTheme} value={theme}>
       <option value="dark">Dark</option>
       <option value="light">Light</option>
-      <option value="vercel">Vercel</option>
     </select>
   );
 }

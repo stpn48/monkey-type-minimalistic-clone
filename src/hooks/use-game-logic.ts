@@ -4,9 +4,9 @@ import { useModeHandler } from "./use-mode-handler";
 
 export function useGameLogic(words: string[]) {
   // all the game settings
-  const { mode, wordCount } = useConfigState();
+  const { mode } = useConfigState();
   // handle key presses
   useKeyHandlers(mode, words);
   // handle wordCount mode and quote mode
-  useModeHandler({ mode, words, wordCount });
+  useModeHandler({ mode, words });
 }

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 let intervalId: NodeJS.Timeout | null = null;
 
-export function Timer() {
+export default function Timer() {
   const { startTimer } = useTypingField();
   const { timeDuration } = useConfigState();
 
@@ -40,10 +40,6 @@ export function Timer() {
   useEffect(() => {
     setTime(timeDuration);
   }, [timeDuration]);
-
-  if (!startTimer) {
-    return null;
-  }
 
   return <p className="font-geist-mono text-3xl text-primary">{formatTime(time)}</p>;
 }

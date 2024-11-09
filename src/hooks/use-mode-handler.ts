@@ -5,19 +5,21 @@ import { useEffect } from "react";
 type Args = {
   words: string[];
   mode: string;
-  wordCount: number;
 };
 
-export function useModeHandler({ words, mode, wordCount }: Args) {
+export function useModeHandler({ words, mode }: Args) {
   const { activeLetterIndex, activeWordIndex } = useTypingField();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (mode === "wordCount") {
-      if (activeWordIndex === wordCount - 1 && activeLetterIndex == words[activeWordIndex].length) {
+    if (mode === "wordCount" || mode === "quote") {
+      if (
+        activeWordIndex === words.length - 1 &&
+        activeLetterIndex == words[activeWordIndex].length
+      ) {
         router.push("/results");
       }
     }
-  }, [activeWordIndex, wordCount, activeLetterIndex, words, mode, router]);
+  }, [activeWordIndex, activeLetterIndex, words, mode, router]);
 }
