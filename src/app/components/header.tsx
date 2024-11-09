@@ -3,7 +3,7 @@ import { Settings, UserRound } from "lucide-react";
 
 export function Header() {
   return (
-    <header className="flex w-full">
+    <header className="flex w-full px-20">
       <div className="flex items-center gap-3">
         <Logo />
         <h1 className="text-2xl font-bold text-logoText">Type</h1>
