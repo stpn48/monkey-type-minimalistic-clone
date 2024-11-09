@@ -1,6 +1,8 @@
 import { useTypingField } from "@/context/use-typing-field";
 import { Mode } from "@/context/useConfigState";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+let timeoutId: NodeJS.Timeout | null = null;
 
 export function useKeyHandlers(mode: Mode, words: string[]) {
   const {
@@ -10,20 +12,33 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
     activeWordIndex,
     setActiveWordIndex,
     setCurrRow,
+    setCapsLockActive,
+    setStartTimer,
+    setUserTyping,
+    startTimer,
+    userTyping,
   } = useTypingField();
+
+  const capsLockStateInitialized = useRef<boolean>(false);
 
   const handleLetterKey = useCallback(
     (e: KeyboardEvent) => {
+      // start timer if mode is type and timer is not started
+      if (mode === "time" && !startTimer) {
+        setStartTimer(true);
+      }
+
+      setUserTyping(true);
       //  add letter to active word, and move to next letter
       setUserWords((prev) => {
         const updatedWords = [...prev];
-        const updatedWord = updatedWords[activeWordIndex] + e.key.toLowerCase();
+        const updatedWord = updatedWords[activeWordIndex] + e.key;
         updatedWords[activeWordIndex] = updatedWord;
         return updatedWords;
       });
       setActiveLetterIndex((prev) => prev + 1);
     },
-    [setUserWords, activeWordIndex, mode],
+    [setUserWords, activeWordIndex, mode, startTimer],
   );
 
   const handleSpaceKey = useCallback(() => {
@@ -59,22 +74,62 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
     }
   }, [activeLetterIndex, setUserWords, activeWordIndex]);
 
+  const handleFirstKeyTyped = useCallback(
+    (e: KeyboardEvent) => {
+      if (!capsLockStateInitialized.current) {
+        // Check if the first key typed is uppercase and set the CapsLock state accordingly
+        if (e.key === e.key.toUpperCase() && e.key.length === 1) {
+          setCapsLockActive(true);
+        } else {
+          setCapsLockActive(false);
+        }
+
+        capsLockStateInitialized.current = true;
+      }
+    },
+    [capsLockStateInitialized.current, setCapsLockActive],
+  );
+
   const handleKeydown = useCallback(
     (e: KeyboardEvent) => {
-      if (/[a-zA-Z]/.test(e.key) && e.key.length === 1) {
+      // all letters and symbols regex
+      if (/[\p{L}\p{S}\p{P}]/u.test(e.key) && e.key.length === 1) {
         handleLetterKey(e);
       } else if (e.code === "Space") {
         handleSpaceKey();
       } else if (e.key === "Backspace") {
         handleBackspaceKey();
-      }
+      } else if (e.key === "CapsLock") setCapsLockActive(true);
     },
-    [handleLetterKey, handleSpaceKey, handleBackspaceKey],
+    [handleLetterKey, handleSpaceKey, handleBackspaceKey, setCapsLockActive],
   );
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeydown);
+    window.addEventListener("keydown", handleFirstKeyTyped);
+    window.addEventListener("keyup", (e) => {
+      if (e.key === "CapsLock") setCapsLockActive(false);
+    });
 
-    return () => window.removeEventListener("keydown", handleKeydown);
-  }, [handleKeydown]);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+      window.removeEventListener("keydown", handleFirstKeyTyped);
+      window.addEventListener("keyup", (e) => {
+        if (e.key === "CapsLock") setCapsLockActive(false);
+      });
+    };
+  }, [handleKeydown, handleFirstKeyTyped]);
+
+  // user is not typing anymore
+  useEffect(() => {
+    if (!userTyping) return;
+
+    timeoutId = setTimeout(() => {
+      setUserTyping(false);
+    }, 2000);
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [userTyping]);
 }
