@@ -26,11 +26,7 @@ export function ToggleThemeButton({ className }: Props) {
   if (!isMounted) return null;
 
   return (
-    <select
-      className="absolute bottom-4 right-4 bg-background"
-      onChange={toggleTheme}
-      value={theme}
-    >
+    <select className="bg-background" onChange={toggleTheme} value={theme}>
       <option value="dark">Dark</option>
       <option value="light">Light</option>
       <option value="vercel">Vercel</option>
