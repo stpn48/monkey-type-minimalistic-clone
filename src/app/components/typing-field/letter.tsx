@@ -9,7 +9,7 @@ export function Letter({ letter, userLetter }: Props) {
   return (
     <span
       className={twMerge(
-        "font-geist-mono text-[28px]",
+        "font-geist-mono text-3xl",
         userLetter === letter && "text-text-primary",
         userLetter !== letter && "text-incorrect-text",
         userLetter === "" && "text-text",
