@@ -1,3 +1,5 @@
+import { getQuote } from "@/app/actions/get-quote";
+import { useTypingField } from "@/context/use-typing-field";
 import { useConfigState } from "@/context/useConfigState";
 import { generate as generateRandomWords } from "random-words";
 import { useCallback, useEffect, useState } from "react";
@@ -5,7 +7,7 @@ import { useHandleTimeMode } from "./use-infinite-words";
 
 export function useGenerateWords() {
   const [words, setWords] = useState<string[]>([]);
-  const { mode, wordCount } = useConfigState();
+  const { mode, wordCount, quoteLength } = useConfigState();
 
   const generateWords = useCallback((wordCount: number) => {
     const generatedWords = generateRandomWords(wordCount) as string[];
@@ -26,9 +28,21 @@ export function useGenerateWords() {
         break;
 
       case "quote":
+        const getQuotes = async () => {
+          const quote = await getQuote(quoteLength);
+
+          if (!quote) {
+            console.error("No quote found");
+            return;
+          }
+
+          setWords([...quote.quote.split(" ")]);
+        };
+
+        getQuotes();
         break;
     }
-  }, [mode, wordCount]);
+  }, [mode, wordCount, quoteLength]);
 
   return { words };
 }
