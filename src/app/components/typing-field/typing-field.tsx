@@ -7,7 +7,7 @@ import { useConfigState } from "@/context/useConfigState";
 import { useGameLogic } from "@/hooks/use-game-logic";
 import { useGenerateWords } from "@/hooks/use-generate-words";
 import { LoaderPinwheel } from "lucide-react";
-import React from "react";
+import React, { act } from "react";
 
 const CapsLockAlert = React.lazy(() => import("@/app/components/caps-lock-alert"));
 const Timer = React.lazy(() => import("@/app/components/typing-field/timer"));
@@ -17,8 +17,9 @@ const MemoWord = React.memo(Word);
 
 export function TypingField() {
   const { words, isLoading } = useGenerateWords();
-  const { userWords, userTyping } = useTypingField();
+  const { userWords, userTyping, activeWordIndex } = useTypingField();
   const { mode, wordCount } = useConfigState();
+
   useGameLogic(words);
 
   if (isLoading) {
@@ -41,6 +42,7 @@ export function TypingField() {
 
         {words.map((word, wordIndex) => (
           <MemoWord
+            isBehind={wordIndex < activeWordIndex}
             key={wordIndex}
             word={word}
             userWord={userWords[wordIndex] || ""}
