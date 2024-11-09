@@ -3,7 +3,7 @@
 import { useTypingField } from "@/context/use-typing-field";
 import React from "react";
 
-export function CapsLockAlert() {
+export default function CapsLockAlert() {
   const { capsLockActive } = useTypingField();
 
   return (
