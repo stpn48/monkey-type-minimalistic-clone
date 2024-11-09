@@ -14,6 +14,7 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
     setStartTimer,
     setUserTyping,
     startTimer,
+    userWords,
   } = useTypingField();
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,26 +40,26 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
 
   const handleSpaceKey = useCallback(() => {
     // if user is at the end or beyond the end of the word and clicks space, move to next word
-    if (activeLetterIndex >= words[activeWordIndex].length) {
-      // get the currWord and next word
-      const currWord = document.querySelector(`.word-${activeWordIndex}`) as HTMLElement;
-      const nextWord = document.querySelector(`.word-${activeWordIndex + 1}`) as HTMLElement;
+    // get the currWord and next word
+    const currWord = document.querySelector(`.word-${activeWordIndex}`) as HTMLElement;
+    const nextWord = document.querySelector(`.word-${activeWordIndex + 1}`) as HTMLElement;
 
-      if (!currWord || !nextWord) throw new Error("Could not find current or next word");
+    if (!currWord || !nextWord) throw new Error("Could not find current or next word");
 
-      // if next word is lower than the current word its on a new row
-      if (nextWord.offsetTop > currWord.offsetTop) {
-        setCurrRow((prev) => prev + 1);
-      }
-
-      setUserWords((prev) => [...prev, ""]);
-      setActiveWordIndex((prev) => prev + 1);
-      setActiveLetterIndex(0);
+    // if next word is lower than the current word its on a new row
+    if (nextWord.offsetTop > currWord.offsetTop) {
+      setCurrRow((prev) => prev + 1);
     }
+
+    setUserWords((prev) => [...prev, ""]);
+    setActiveWordIndex((prev) => prev + 1);
+    setActiveLetterIndex(0);
   }, [activeLetterIndex, words, activeWordIndex]);
 
   const handleBackspaceKey = useCallback(() => {
     // remove letter from active word, move the prev letter
+    const prevWord = document.querySelector(`.word-${activeWordIndex - 1}`) as HTMLElement;
+
     if (activeLetterIndex > 0) {
       setUserWords((prev) => {
         const updatedWords = [...prev];
@@ -67,8 +68,15 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
         return updatedWords;
       });
       setActiveLetterIndex((prev) => prev - 1);
+      return;
     }
-  }, [activeLetterIndex, setUserWords, activeWordIndex]);
+
+    // handle when the prev word has a mistake so the user can go back
+    if (prevWord && activeLetterIndex === 0 && prevWord.classList.contains("underline")) {
+      setActiveLetterIndex(userWords[activeWordIndex - 1].length);
+      setActiveWordIndex((prev) => prev - 1);
+    }
+  }, [activeLetterIndex, setUserWords, activeWordIndex, userWords]);
 
   const handleFirstKeyTyped = useCallback(
     (e: KeyboardEvent) => {
