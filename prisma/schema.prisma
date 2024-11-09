@@ -13,7 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model WordList {
-  id   String @id @default(uuid())
-  word String
+model Quote {
+  id        String   @id @default(uuid())
+  quote     String
+  author    String
+  createdAt DateTime @default(now())
+  length    String
 }
