@@ -9,6 +9,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        caretFlashSmooth: "caretFlashSmooth 1s infinite",
+      },
+      keyframes: {
+        caretFlashSmooth: {
+          "0%, 100%": {
+            opacity: "0",
+          },
+          "50%": {
+            opacity: "1",
+          },
+        },
+      },
       fontFamily: {
         "geist-mono": ["var(--font-geist-mono)", "monospace"],
         "geist-sans": ["var(--font-geist-sans)", "sans-serif"],
