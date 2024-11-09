@@ -52,6 +52,7 @@ export function ConfigStateProvider({ children }: PropsWithChildren) {
     quoteLengthParser.withDefault("short"),
   );
 
+  // When anything in the config changes, reset the typing field
   useEffect(() => {
     resetTypingField();
   }, [mode, includePunctuation, includeNumbers, timeDuration, wordCount, quoteLength]);
