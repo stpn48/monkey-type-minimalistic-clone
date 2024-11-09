@@ -1,16 +1,16 @@
 "use client";
 
+import { useTypingField } from "@/context/use-typing-field";
+import { useConfigState } from "@/context/useConfigState";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type Props = {
-  startTimer: boolean;
-  timeDuration: number;
-};
-
 let intervalId: NodeJS.Timeout | null = null;
 
-export function Timer({ startTimer, timeDuration }: Props) {
+export function Timer() {
+  const { startTimer } = useTypingField();
+  const { timeDuration } = useConfigState();
+
   const [time, setTime] = useState(timeDuration);
 
   const router = useRouter();
@@ -41,7 +41,11 @@ export function Timer({ startTimer, timeDuration }: Props) {
     setTime(timeDuration);
   }, [timeDuration]);
 
-  return <p className="text-3xl text-primary">{formatTime(time)}</p>;
+  if (!startTimer) {
+    return null;
+  }
+
+  return <p className="font-geist-mono text-3xl text-primary">{formatTime(time)}</p>;
 }
 
 function formatTime(timeSeconds: number) {
