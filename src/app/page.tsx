@@ -1,15 +1,13 @@
 import { Footer } from "@/app/components/footer";
 import { Header } from "@/app/components/header";
-import { MainContent } from "@/app/components/main-content";
-import { ToggleThemeButton } from "@/components/toggle-theme-button";
+import { MainContent } from "./components/main-content";
 
 export default function Home() {
   return (
-    <div className="flex h-screen flex-col px-10 py-4">
+    <div className="flex h-screen w-screen flex-col gap-10 py-8">
       <Header />
       <MainContent />
       <Footer />
-      <ToggleThemeButton />
     </div>
   );
 }
