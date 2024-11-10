@@ -1,8 +1,10 @@
+import { set } from "lodash";
+import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { Mode } from "@/context/useConfigState";
 import { useCallback, useEffect, useRef } from "react";
 
-export function useKeyHandlers(mode: Mode, words: string[]) {
+export function useKeyHandlers(mode: Mode) {
   const {
     setUserWords,
     setActiveLetterIndex,
@@ -14,8 +16,13 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
     setStartTimer,
     setUserTyping,
     startTimer,
+    words,
     userWords,
+    startedTypingTime,
+    setStartedTypingTime,
   } = useTypingField();
+
+  const { setTotalWords } = useStatisticsStore();
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const capsLockStateInitialized = useRef<boolean>(false);
@@ -26,6 +33,10 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
       if (mode === "time" && !startTimer) {
         setStartTimer(true);
       }
+
+      if (startedTypingTime === null) {
+        setStartedTypingTime(new Date().getTime());
+      }
       // add letter to active word, and move to next letter
       setUserWords((prev) => {
         const updatedWords = [...prev];
@@ -35,7 +46,7 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
       });
       setActiveLetterIndex((prev) => prev + 1);
     },
-    [setUserWords, activeWordIndex, mode, startTimer],
+    [setUserWords, activeWordIndex, mode, startTimer, startedTypingTime],
   );
 
   const handleSpaceKey = useCallback(() => {
@@ -54,6 +65,7 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
     setUserWords((prev) => [...prev, ""]);
     setActiveWordIndex((prev) => prev + 1);
     setActiveLetterIndex(0);
+    setTotalWords((prev) => prev + 1);
   }, [activeLetterIndex, words, activeWordIndex]);
 
   const handleBackspaceKey = useCallback(() => {
@@ -75,6 +87,7 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
     if (prevWord && activeLetterIndex === 0 && prevWord.classList.contains("underline")) {
       setActiveLetterIndex(userWords[activeWordIndex - 1].length);
       setActiveWordIndex((prev) => prev - 1);
+      setTotalWords((prev) => prev - 1);
     }
   }, [activeLetterIndex, setUserWords, activeWordIndex, userWords]);
 
@@ -97,8 +110,7 @@ export function useKeyHandlers(mode: Mode, words: string[]) {
   const handleKeydown = useCallback(
     (e: KeyboardEvent) => {
       handleUserTyping();
-      // all letters and symbols regex
-      if (/[\p{L}\p{S}\p{P}]/u.test(e.key) && e.key.length === 1) {
+      if (e.key.length === 1 && e.key !== " ") {
         handleLetterKey(e);
       } else if (e.code === "Space") {
         handleSpaceKey();
