@@ -1,47 +1,47 @@
-import { getQuote } from "@/app/actions/get-quote";
+import { useTypingField } from "@/context/use-typing-field";
 import { useConfigState } from "@/context/useConfigState";
-import { generate as generateRandomWords } from "random-words";
-import { useCallback, useEffect, useState, useTransition } from "react";
-import { useHandleTimeMode } from "./use-infinite-words";
+import { useCallback, useEffect } from "react";
+import { initInfiniteWordsHandler } from "./init-infinite-words-handler";
+import { useDebouncedResize } from "./use-debounced-resize";
+import { useWordsGenerator } from "./use-words-generator";
 
 export function useGenerateWords() {
-  const [words, setWords] = useState<string[]>([]);
-  const [isLoading, startLoading] = useTransition();
-  const { mode, wordCount, quoteLength } = useConfigState();
+  const { mode, quoteLength, includeNumbers } = useConfigState();
+  const { resetTypingField, setWords } = useTypingField();
+  const { wordCount } = useConfigState();
 
-  const generateWords = useCallback((wordCount: number) => {
-    const generatedWords = generateRandomWords(wordCount) as string[];
-    setWords(generatedWords);
-  }, []);
+  const { generateWords, generateQuote, isLoading } = useWordsGenerator();
 
-  useHandleTimeMode(setWords, mode);
+  initInfiniteWordsHandler(includeNumbers, generateWords); // TODO: Fix when generating new wowrds with numbers it adds 3 rows instead of 1
 
-  // generate initial words
-  useEffect(() => {
+  const generateInitialWords = useCallback(() => {
     switch (mode) {
       case "wordCount":
-        generateWords(wordCount);
+        const generatedWords = generateWords(wordCount, includeNumbers);
+        setWords([...generatedWords]);
+
         break;
 
       case "time":
-        generateWords(30);
+        const words = generateWords(0, includeNumbers);
+        setWords([...words]);
         break;
 
       case "quote":
-        setWords([]);
-        startLoading(async () => {
-          const quote = await getQuote(quoteLength);
-
-          if (!quote) {
-            console.error("No quote found");
-            return;
-          }
-
-          setWords([...quote.quote.split(" ")]);
-        });
+        generateQuote(quoteLength);
         break;
     }
-  }, [mode, wordCount, quoteLength]);
+  }, [mode, generateWords, includeNumbers, quoteLength, setWords, wordCount]);
 
-  return { words, isLoading };
+  useDebouncedResize(() => {
+    resetTypingField();
+    generateInitialWords();
+  });
+
+  // generate initial words
+  useEffect(() => {
+    generateInitialWords();
+  }, [generateInitialWords]);
+
+  return { isLoading };
 }
