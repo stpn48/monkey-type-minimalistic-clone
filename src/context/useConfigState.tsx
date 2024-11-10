@@ -3,6 +3,7 @@
 import { modeParser, quoteLengthParser } from "@/nuqs/parsers";
 import { Options, parseAsBoolean, parseAsInteger, useQueryState } from "nuqs";
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo } from "react";
+import { useStatisticsStore } from "./use-statistics";
 import { useTypingField } from "./use-typing-field";
 
 export type Mode = "time" | "wordCount" | "quote";
@@ -32,6 +33,7 @@ const ConfigStateContext = createContext<ContextType | null>(null);
 
 export function ConfigStateProvider({ children }: PropsWithChildren) {
   const { resetTypingField } = useTypingField();
+  const { resetStatistics } = useStatisticsStore();
 
   const [mode, setMode] = useQueryState("mode", modeParser.withDefault("time"));
   const [includePunctuation, setIncludePunctuation] = useQueryState(
@@ -55,6 +57,7 @@ export function ConfigStateProvider({ children }: PropsWithChildren) {
   // When anything in the config changes, reset the typing field
   useEffect(() => {
     resetTypingField();
+    resetStatistics();
   }, [mode, includePunctuation, includeNumbers, timeDuration, wordCount, quoteLength]);
 
   const value = useMemo(() => {
