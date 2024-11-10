@@ -4,6 +4,7 @@ import { QuoteLength } from "@/context/useConfigState";
 import prisma from "@/utils/prisma";
 
 export async function getQuote(length: QuoteLength) {
+  // TODO: Add more security
   try {
     const quotes = await prisma.quote.findMany({
       where: {
