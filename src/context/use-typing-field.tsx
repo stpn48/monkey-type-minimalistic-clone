@@ -7,6 +7,9 @@ type Store = {
   activeLetterIndex: number;
   setActiveLetterIndex: (val: number | ((prev: number) => number)) => void;
 
+  words: string[];
+  setWords: (val: string[] | ((prev: string[]) => string[])) => void;
+
   userWords: string[];
   setUserWords: (val: string[] | ((prev: string[]) => string[])) => void;
 
@@ -24,6 +27,15 @@ type Store = {
 
   userTyping: boolean;
   setUserTyping: (val: boolean | ((prev: boolean) => boolean)) => void;
+
+  fieldWidth: number | null;
+  setFieldWidth: (val: number | null | ((prev: number | null) => number | null)) => void;
+
+  startedTypingTime: number | null;
+  setStartedTypingTime: (val: number | null | ((prev: number | null) => number | null)) => void;
+
+  finishedTypingTime: number | null;
+  setFinishedTypingTime: (val: number | null | ((prev: number | null) => number | null)) => void;
 
   resetTypingField: () => void;
 };
@@ -44,6 +56,10 @@ export const useTypingField = create<Store>((set) => ({
   userWords: [""],
   setUserWords: (val) =>
     set((state) => ({ userWords: typeof val === "function" ? val(state.userWords) : val })),
+
+  words: [],
+  setWords: (val) =>
+    set((state) => ({ words: typeof val === "function" ? val(state.words) : val })),
 
   currRow: 1,
   setCurrRow: (val) =>
@@ -71,8 +87,26 @@ export const useTypingField = create<Store>((set) => ({
   setUserTyping: (val) =>
     set((state) => ({ userTyping: typeof val === "function" ? val(state.userTyping) : val })),
 
+  fieldWidth: null,
+  setFieldWidth: (val) =>
+    set((state) => ({ fieldWidth: typeof val === "function" ? val(state.fieldWidth) : val })),
+
+  startedTypingTime: null,
+  setStartedTypingTime: (val) =>
+    set((state) => ({
+      startedTypingTime: typeof val === "function" ? val(state.startedTypingTime) : val,
+    })),
+
+  finishedTypingTime: null,
+  setFinishedTypingTime: (val) =>
+    set((state) => ({
+      finishedTypingTime: typeof val === "function" ? val(state.finishedTypingTime) : val,
+    })),
+
   resetTypingField: () =>
     set({
+      startedTypingTime: null,
+      finishedTypingTime: null,
       startTimer: false,
       userTyping: false,
       activeWordIndex: 0,
