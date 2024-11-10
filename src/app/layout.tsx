@@ -1,3 +1,4 @@
+import { Header } from "@/app/components/header";
 import { Providers } from "@/components/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -27,9 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} bg-background font-geist-sans text-sm font-medium text-text ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} bg-background py-8 font-geist-sans text-sm font-medium text-text ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );
