@@ -7,7 +7,7 @@ import { useConfigState } from "@/context/useConfigState";
 import { useGameLogic } from "@/hooks/use-game-logic";
 import { useGenerateWords } from "@/hooks/use-generate-words";
 import { LoaderPinwheel } from "lucide-react";
-import React, { act } from "react";
+import React, { useEffect } from "react";
 
 const CapsLockAlert = React.lazy(() => import("@/app/components/caps-lock-alert"));
 const Timer = React.lazy(() => import("@/app/components/typing-field/timer"));
@@ -16,11 +16,20 @@ const WordsLeft = React.lazy(() => import("@/app/components/typing-field/words-l
 const MemoWord = React.memo(Word);
 
 export function TypingField() {
-  const { words, isLoading } = useGenerateWords();
-  const { userWords, userTyping, activeWordIndex } = useTypingField();
-  const { mode, wordCount } = useConfigState();
+  const { isLoading } = useGenerateWords();
+  const { userWords, userTyping, activeWordIndex, startTimer, setFieldWidth, words } =
+    useTypingField();
+  const { mode } = useConfigState();
 
-  useGameLogic(words);
+  useGameLogic();
+
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current?.offsetWidth) {
+      setFieldWidth(containerRef.current.offsetWidth);
+    }
+  }, [containerRef.current?.offsetWidth, setFieldWidth]);
 
   if (isLoading) {
     return (
@@ -33,11 +42,11 @@ export function TypingField() {
   return (
     <>
       <div className="relative flex h-[100px] w-full items-center">
-        {mode === "time" && userTyping && <Timer />}
-        {mode === "wordCount" && userTyping && <WordsLeft wordCount={wordCount} />}
+        {mode === "time" && startTimer && <Timer />}
+        {mode === "wordCount" && userTyping && <WordsLeft />}
         <CapsLockAlert />
       </div>
-      <div className="flex flex-wrap gap-4">
+      <div ref={containerRef} className="flex flex-wrap gap-4">
         {userTyping && <Caret />}
 
         {words.map((word, wordIndex) => (
