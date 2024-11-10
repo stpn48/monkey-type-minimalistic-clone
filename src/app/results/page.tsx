@@ -1,13 +1,12 @@
 import React from "react";
+import { Statistics } from "./components/statistics";
 
 type Props = {};
 
 export default function ResultsPage({}: Props) {
   return (
-    <div className="p-4">
-      <h1>WPM</h1>
-      <h1>ACCURACY</h1>
-      <h1>WPM</h1>
+    <div className="px-20">
+      <Statistics />
     </div>
   );
 }
