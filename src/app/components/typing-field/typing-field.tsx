@@ -4,6 +4,7 @@ import { Caret } from "@/app/components/typing-field/caret";
 import { Word } from "@/app/components/typing-field/word";
 import { useTypingField } from "@/context/use-typing-field";
 import { useConfigState } from "@/context/useConfigState";
+import { useContainerWidth } from "@/hooks/use-contaier-width";
 import { useGameLogic } from "@/hooks/use-game-logic";
 import { useGenerateWords } from "@/hooks/use-generate-words";
 import { LoaderPinwheel } from "lucide-react";
@@ -17,19 +18,15 @@ const MemoWord = React.memo(Word);
 
 export function TypingField() {
   const { isLoading } = useGenerateWords();
-  const { userWords, userTyping, activeWordIndex, startTimer, setFieldWidth, words } =
-    useTypingField();
+  const { userWords, userTyping, activeWordIndex, startTimer, words } = useTypingField();
   const { mode } = useConfigState();
+  const { containerRef } = useContainerWidth();
 
   useGameLogic();
 
-  const containerRef = React.useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    if (containerRef.current?.offsetWidth) {
-      setFieldWidth(containerRef.current.offsetWidth);
-    }
-  }, [containerRef.current?.offsetWidth, setFieldWidth]);
+    console.log("words changed", words);
+  }, [words]);
 
   if (isLoading) {
     return (
@@ -41,7 +38,7 @@ export function TypingField() {
 
   return (
     <>
-      <div className="relative flex h-[100px] w-full items-center">
+      <div className="relative flex h-[80px] w-full items-center">
         {mode === "time" && startTimer && <Timer />}
         {mode === "wordCount" && userTyping && <WordsLeft />}
         <CapsLockAlert />
