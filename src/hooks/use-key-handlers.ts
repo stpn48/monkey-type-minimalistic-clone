@@ -1,9 +1,11 @@
+"use client";
+
 import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
-import { Mode } from "@/context/useConfigState";
+import { useConfigState } from "@/context/useConfigState";
 import { useCallback, useEffect, useRef } from "react";
 
-export function useKeyHandlers(mode: Mode) {
+export function useKeyHandlers() {
   const {
     setUserWords,
     setActiveLetterIndex,
@@ -20,6 +22,8 @@ export function useKeyHandlers(mode: Mode) {
     startedTypingTime,
     setStartedTypingTime,
   } = useTypingField();
+
+  const { mode } = useConfigState();
 
   const { setTotalWords } = useStatisticsStore();
 
@@ -84,6 +88,7 @@ export function useKeyHandlers(mode: Mode) {
 
     // handle when the prev word has a mistake so the user can go back
     if (prevWord && activeLetterIndex === 0 && prevWord.classList.contains("underline")) {
+      setUserWords((prev) => prev.slice(0, -1));
       setActiveLetterIndex(userWords[activeWordIndex - 1].length);
       setActiveWordIndex((prev) => prev - 1);
       setTotalWords((prev) => prev - 1);
