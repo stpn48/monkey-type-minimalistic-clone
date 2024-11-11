@@ -1,17 +1,16 @@
 import { useStatisticsStore } from "@/context/use-statistics";
-import { useTypingField } from "@/context/use-typing-field";
-import React from "react";
+import { useConfigState } from "@/context/useConfigState";
 
 type Props = {};
 
 export default function WordsLeft({}: Props) {
   const { totalWords } = useStatisticsStore();
-  const { words } = useTypingField();
+  const { wordCount } = useConfigState();
 
   return (
     <div>
       <h1 className="font-geist-mono text-3xl text-primary">
-        {totalWords}/{words.length}
+        {totalWords}/{wordCount}
       </h1>
     </div>
   );
