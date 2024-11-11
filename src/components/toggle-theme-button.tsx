@@ -3,18 +3,16 @@
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 
-type Props = {
-  className?: string;
-};
-
 //TODO: rename this component
-export function ToggleThemeButton({ className }: Props) {
+export function ToggleThemeButton() {
   const [isMounted, setIsMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setTheme(e.target.value);
+      if (isMounted) {
+        setTheme(e.target.value);
+      }
     },
     [setTheme],
   );
@@ -23,7 +21,7 @@ export function ToggleThemeButton({ className }: Props) {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) return null;
+  if (!isMounted || !theme) return null;
 
   return (
     <select className="bg-background" onChange={toggleTheme} value={theme}>
