@@ -1,8 +1,10 @@
 import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
-import { useCallback, useEffect } from "react";
+import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
+import { calculateStatistics } from "@/utils/calculate-statistics";
+import { useEffect } from "react";
 
-export function getStatistics(words: string[], userWords: string[]) {
+export function getStatistics() {
   const {
     setCorrectLetters,
     setCorrectWords,
@@ -16,69 +18,36 @@ export function getStatistics(words: string[], userWords: string[]) {
     setMissedLetters,
   } = useStatisticsStore();
 
-  const { startedTypingTime, finishedTypingTime } = useTypingField();
+  const { startedTypingTime, finishedTypingTime, words, userWords } = useTypingField();
+  const { navigateWithParams } = usePreserveSearchParams();
 
-  const getStatistics = useCallback(() => {
-    let totalCorrectLetters = 0;
-    let totalIncorrectLetters = 0;
-    let totalCorrectWords = 0;
-    let totalIncorrectWords = 0;
-    let totalExtraLetters = 0;
-    let totalMissedLetters = 0;
-    // loop through each user word
-    for (let i = 0; i < userWords.length; i++) {
-      console.log(`iteration ${i} checking words "${words[i]}" and "${userWords[i]}"`);
-      // words match
-      if (words[i] === userWords[i]) {
-        totalCorrectWords++;
-        totalCorrectLetters += userWords[i].length;
-        continue;
-      }
-
-      // words don't match
-      if (words[i] !== userWords[i]) {
-        totalIncorrectWords++;
-        // if the original word is longer than the user word, they missed some letters
-        if (words[i].length > userWords[i].length) {
-          totalMissedLetters += words[i].length - userWords[i].length;
-        } else if (words[i].length < userWords[i].length) {
-          totalExtraLetters += userWords[i].length - words[i].length;
-        }
-
-        // check for each letter if it matches
-        for (let j = 0; j < userWords[i].length; j++) {
-          if (words[i][j] !== userWords[i][j]) {
-            totalIncorrectLetters++;
-          } else {
-            totalCorrectLetters++;
-          }
-        }
-      }
+  useEffect(() => {
+    if (!words.length || !userWords.length) {
+      navigateWithParams("/");
+      return;
     }
 
-    setCorrectLetters(totalCorrectLetters);
-    setIncorrectLetters(totalIncorrectLetters);
-    setExtraLetters(totalExtraLetters);
-    setCorrectWords(totalCorrectWords);
-    setIncorrectWords(totalIncorrectWords);
-    setMissedLetters(totalMissedLetters);
+    const statistics = calculateStatistics(words, userWords);
+
+    setCorrectLetters(statistics.totalCorrectLetters);
+    setIncorrectLetters(statistics.totalIncorrectLetters);
+    setExtraLetters(statistics.totalExtraLetters);
+    setCorrectWords(statistics.totalCorrectWords);
+    setIncorrectWords(statistics.totalIncorrectWords);
+    setMissedLetters(statistics.totalMissedLetters);
 
     setWpm(
       calculateWpm(
-        totalCorrectWords + totalIncorrectWords,
+        statistics.totalCorrectWords + statistics.totalIncorrectWords,
         startedTypingTime!,
         finishedTypingTime!,
       ),
     );
 
-    setAccuracy(calculateAccuracy(totalCorrectLetters, mistakes));
+    setAccuracy(calculateAccuracy(statistics.totalCorrectLetters, mistakes));
 
     setDuration((finishedTypingTime! - startedTypingTime!) / 1000);
-  }, [words, userWords, mistakes]);
-
-  useEffect(() => {
-    getStatistics();
-  }, [getStatistics]);
+  }, [words, userWords, navigateWithParams, startedTypingTime, finishedTypingTime, mistakes]);
 }
 
 function calculateWpm(totalWords: number, startedTypingTime: number, finishedTypingTime: number) {
