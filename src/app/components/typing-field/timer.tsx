@@ -32,7 +32,7 @@ export default function Timer() {
     if (time === 0) {
       clearInterval(intervalId!);
       setFinishedTypingTime(new Date().getTime());
-      router.push("/results");
+      router.replace("/results");
     }
   }, [time, router, intervalId]);
 
