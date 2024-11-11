@@ -2,8 +2,8 @@
 
 import { useTypingField } from "@/context/use-typing-field";
 import { useConfigState } from "@/context/useConfigState";
+import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
 import { formatTime } from "@/utils/format-time";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 let intervalId: NodeJS.Timeout | null = null;
@@ -11,10 +11,9 @@ let intervalId: NodeJS.Timeout | null = null;
 export default function Timer() {
   const { startTimer, setFinishedTypingTime } = useTypingField();
   const { timeDuration } = useConfigState();
+  const { navigateWithParams } = usePreserveSearchParams();
 
   const [time, setTime] = useState(timeDuration);
-
-  const router = useRouter();
 
   useEffect(() => {
     if (startTimer) {
@@ -32,9 +31,9 @@ export default function Timer() {
     if (time === 0) {
       clearInterval(intervalId!);
       setFinishedTypingTime(new Date().getTime());
-      router.replace("/results");
+      navigateWithParams("/results");
     }
-  }, [time, router, intervalId]);
+  }, [time, navigateWithParams, intervalId]);
 
   useEffect(() => {
     setTime(timeDuration);
