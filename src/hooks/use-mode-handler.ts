@@ -1,22 +1,28 @@
+"use client";
+
 import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { useConfigState } from "@/context/useConfigState";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { usePreserveSearchParams } from "./use-preserve-search-params";
 
-export function useModeHandler(mode: string) {
+export function useModeHandler() {
   const { setFinishedTypingTime, activeLetterIndex, activeWordIndex, words } = useTypingField();
   const { totalWords } = useStatisticsStore();
-  const { wordCount } = useConfigState();
-
-  const router = useRouter();
+  const { wordCount, mode } = useConfigState();
+  const { navigateWithParams } = usePreserveSearchParams();
 
   useEffect(() => {
     if (mode === "wordCount") {
       if (totalWords === wordCount - 1 && activeLetterIndex === words[activeWordIndex].length) {
         setFinishedTypingTime(new Date().getTime());
-        router.replace("/results");
+        navigateWithParams("/results");
+      }
+    } else if (mode === "quote") {
+      if (totalWords === words.length - 1 && activeLetterIndex === words[activeWordIndex].length) {
+        setFinishedTypingTime(new Date().getTime());
+        navigateWithParams("/results");
       }
     }
-  }, [totalWords, wordCount, mode, router, words, activeWordIndex, activeLetterIndex]);
+  }, [totalWords, wordCount, mode, navigateWithParams, words, activeWordIndex, activeLetterIndex]);
 }
