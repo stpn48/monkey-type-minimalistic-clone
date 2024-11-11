@@ -37,6 +37,9 @@ type Store = {
   finishedTypingTime: number | null;
   setFinishedTypingTime: (val: number | null | ((prev: number | null) => number | null)) => void;
 
+  totalWordsGenerated: number;
+  setTotalWordsGenerated: (val: number | ((prev: number) => number)) => void;
+
   resetTypingField: () => void;
 };
 
@@ -101,6 +104,12 @@ export const useTypingField = create<Store>((set) => ({
   setFinishedTypingTime: (val) =>
     set((state) => ({
       finishedTypingTime: typeof val === "function" ? val(state.finishedTypingTime) : val,
+    })),
+
+  totalWordsGenerated: 0,
+  setTotalWordsGenerated: (val) =>
+    set((state) => ({
+      totalWordsGenerated: typeof val === "function" ? val(state.totalWordsGenerated) : val,
     })),
 
   resetTypingField: () =>
