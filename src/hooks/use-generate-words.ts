@@ -1,3 +1,4 @@
+import { Letter } from "@/app/components/typing-field/letter";
 import { useTypingField } from "@/context/use-typing-field";
 import { useConfigState } from "@/context/useConfigState";
 import { useCallback, useEffect } from "react";
@@ -7,23 +8,30 @@ import { useWordsGenerator } from "./use-words-generator";
 
 export function useGenerateWords() {
   const { mode, quoteLength, includeNumbers } = useConfigState();
-  const { resetTypingField, setWords } = useTypingField();
+  const { resetTypingField, setWords, setTotalWordsGenerated, totalWordsGenerated } =
+    useTypingField();
   const { wordCount } = useConfigState();
 
   const { generateWords, generateQuote, isLoading } = useWordsGenerator();
 
-  initInfiniteWordsHandler(includeNumbers, generateWords); // TODO: Fix when generating new wowrds with numbers it adds 3 rows instead of 1
+  // TODO: Fix when generating new wowrds with numbers it adds 3 rows instead of 1
+  initInfiniteWordsHandler(includeNumbers, generateWords);
+
+  useEffect(() => {
+    console.log("total generated", totalWordsGenerated);
+  }, [totalWordsGenerated]);
 
   const generateInitialWords = useCallback(() => {
     switch (mode) {
       case "wordCount":
         const generatedWords = generateWords(wordCount, includeNumbers);
+        setTotalWordsGenerated(generatedWords.length);
         setWords([...generatedWords]);
-
         break;
 
       case "time":
         const words = generateWords(0, includeNumbers);
+        setTotalWordsGenerated(words.length);
         setWords([...words]);
         break;
 
