@@ -8,7 +8,7 @@ import { useContainerWidth } from "@/hooks/use-contaier-width";
 import { useGameLogic } from "@/hooks/use-game-logic";
 import { useGenerateWords } from "@/hooks/use-generate-words";
 import { LoaderPinwheel } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 
 const CapsLockAlert = React.lazy(() => import("@/app/components/caps-lock-alert"));
 const Timer = React.lazy(() => import("@/app/components/typing-field/timer"));
@@ -23,10 +23,6 @@ export function TypingField() {
   const { containerRef } = useContainerWidth();
 
   useGameLogic();
-
-  useEffect(() => {
-    console.log("words changed", words);
-  }, [words]);
 
   if (isLoading) {
     return (
