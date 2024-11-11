@@ -1,3 +1,5 @@
+"use client";
+
 import { Letter } from "@/app/components/typing-field/letter";
 import React from "react";
 
