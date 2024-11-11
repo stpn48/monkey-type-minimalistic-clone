@@ -21,6 +21,8 @@ type StatisticsStore = {
   setAccuracy: (val: number | ((prev: number) => number)) => void;
   duration: number;
   setDuration: (val: number | ((prev: number) => number)) => void;
+  mistakes: number;
+  setMistakes: (val: number | ((prev: number) => number)) => void;
 
   resetStatistics: () => void;
 };
@@ -60,9 +62,13 @@ export const useStatisticsStore = create<StatisticsStore>((set) => ({
   duration: 0,
   setDuration: (val) =>
     set((state) => ({ duration: typeof val === "function" ? val(state.duration) : val })),
+  mistakes: 0,
+  setMistakes: (val) =>
+    set((state) => ({ mistakes: typeof val === "function" ? val(state.mistakes) : val })),
 
   resetStatistics: () =>
     set({
+      mistakes: 0,
       wpm: 0,
       accuracy: 0,
       duration: 0,
@@ -73,6 +79,5 @@ export const useStatisticsStore = create<StatisticsStore>((set) => ({
       incorrectWords: 0,
       missedLetters: 0,
       extraLetters: 0,
-      totalWords: 0,
     }),
 }));
