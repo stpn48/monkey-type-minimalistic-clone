@@ -1,21 +1,22 @@
+import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
+import { useConfigState } from "@/context/useConfigState";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export function useModeHandler(mode: string) {
-  const { activeLetterIndex, activeWordIndex, words, setFinishedTypingTime } = useTypingField();
+  const { setFinishedTypingTime, activeLetterIndex, activeWordIndex, words } = useTypingField();
+  const { totalWords } = useStatisticsStore();
+  const { wordCount } = useConfigState();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (mode === "wordCount" || mode === "quote") {
-      if (
-        activeWordIndex === words.length - 1 &&
-        activeLetterIndex == words[activeWordIndex].length
-      ) {
+    if (mode === "wordCount") {
+      if (totalWords === wordCount - 1 && activeLetterIndex === words[activeWordIndex].length) {
         setFinishedTypingTime(new Date().getTime());
-        router.push("/results");
+        router.replace("/results");
       }
     }
-  }, [activeWordIndex, activeLetterIndex, words, mode, router]);
+  }, [totalWords, wordCount, mode, router, words, activeWordIndex, activeLetterIndex]);
 }
