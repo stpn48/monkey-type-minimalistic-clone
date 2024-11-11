@@ -1,4 +1,3 @@
-import { set } from "lodash";
 import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { Mode } from "@/context/useConfigState";
