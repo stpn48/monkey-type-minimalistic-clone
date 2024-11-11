@@ -1,19 +1,14 @@
 "use client";
 
 import { useStatisticsStore } from "@/context/use-statistics";
-import { useTypingField } from "@/context/use-typing-field";
 import { getStatistics } from "../hooks/get-statistics";
 import { Statistic } from "./statistic";
 
-type Props = {};
-
-export function Statistics({}: Props) {
-  const { words, userWords } = useTypingField();
+export function Statistics() {
+  getStatistics();
 
   const { wpm, accuracy, duration, correctLetters, incorrectLetters, missedLetters, extraLetters } =
     useStatisticsStore();
-
-  getStatistics(words, userWords);
 
   return (
     <div className="mt-20 flex flex-col flex-wrap gap-10 font-geist-mono text-2xl">
