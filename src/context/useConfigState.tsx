@@ -35,23 +35,29 @@ export function ConfigStateProvider({ children }: PropsWithChildren) {
   const { resetTypingField } = useTypingField();
   const { resetStatistics } = useStatisticsStore();
 
-  const [mode, setMode] = useQueryState("mode", modeParser.withDefault("time"));
+  const [mode, setMode] = useQueryState(
+    "mode",
+    modeParser.withDefault("time").withOptions({ clearOnDefault: false }),
+  );
   const [includePunctuation, setIncludePunctuation] = useQueryState(
     "includePunctuation",
-    parseAsBoolean.withDefault(false),
+    parseAsBoolean.withDefault(false).withOptions({ clearOnDefault: false }),
   );
   const [includeNumbers, setIncludeNumbers] = useQueryState(
     "includeNumbers",
-    parseAsBoolean.withDefault(false),
+    parseAsBoolean.withDefault(false).withOptions({ clearOnDefault: false }),
   );
   const [timeDuration, setTimeDuration] = useQueryState(
     "timeDuration",
-    parseAsInteger.withDefault(15),
+    parseAsInteger.withDefault(15).withOptions({ clearOnDefault: false }),
   );
-  const [wordCount, setWordCount] = useQueryState("wordCount", parseAsInteger.withDefault(10));
+  const [wordCount, setWordCount] = useQueryState(
+    "wordCount",
+    parseAsInteger.withDefault(10).withOptions({ clearOnDefault: false }),
+  );
   const [quoteLength, setQuoteLength] = useQueryState(
     "quoteLength",
-    quoteLengthParser.withDefault("short"),
+    quoteLengthParser.withDefault("short").withOptions({ clearOnDefault: false }),
   );
 
   // When anything in the config changes, reset the typing field and statistics
