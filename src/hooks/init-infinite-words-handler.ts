@@ -1,5 +1,5 @@
+import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
-import { generate as generateRandomWords } from "random-words";
 import { useCallback, useEffect } from "react";
 
 export function initInfiniteWordsHandler(
@@ -16,6 +16,8 @@ export function initInfiniteWordsHandler(
     setCurrRow,
     setWords,
   } = useTypingField();
+
+  const { totalWords } = useStatisticsStore();
 
   const handleThirdRow = useCallback(() => {
     // if on row 3 generate new words, append new words and remove the first row
