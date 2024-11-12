@@ -1,14 +1,31 @@
 "use client";
 
 import { useStatisticsStore } from "@/context/use-statistics";
+import { useTypingField } from "@/context/use-typing-field";
+import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
+import { useEffect } from "react";
 import { getStatistics } from "../hooks/get-statistics";
 import { Statistic } from "./statistic";
 
 export function Statistics() {
   getStatistics();
 
+  const { words, userWords } = useTypingField();
+  const { navigateWithParams } = usePreserveSearchParams();
+
   const { wpm, accuracy, duration, correctLetters, incorrectLetters, missedLetters, extraLetters } =
     useStatisticsStore();
+
+  useEffect(() => {
+    if (!words.length || !userWords.length) {
+      navigateWithParams("/", "replace");
+      return;
+    }
+  }, [navigateWithParams, words, userWords]);
+
+  if (!words.length || !userWords.length || (!wpm && !accuracy && !duration)) {
+    return null;
+  }
 
   return (
     <div className="mt-20 flex flex-col flex-wrap gap-10 font-geist-mono text-2xl">
