@@ -2,7 +2,7 @@
 
 import { ConfigButton } from "@/app/components/config-bar/config-button";
 import { ConfigSection } from "@/app/components/config-bar/config-section";
-import { Mode, useConfigState } from "@/context/useConfigState";
+import { Mode, useConfigState } from "@/context/use-config-state";
 
 export function ModeSection() {
   const { mode: resolvedMode, setMode } = useConfigState();
