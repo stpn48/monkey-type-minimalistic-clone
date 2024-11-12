@@ -23,8 +23,7 @@ export function getStatistics() {
   const { navigateWithParams } = usePreserveSearchParams();
 
   useEffect(() => {
-    if (!words.length || !userWords.length) {
-      navigateWithParams("/", "replace");
+    if (!words.length || !userWords.length || (!startedTypingTime && !finishedTypingTime)) {
       return;
     }
 
