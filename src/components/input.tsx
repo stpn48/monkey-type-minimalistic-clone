@@ -2,15 +2,20 @@ import React, { InputHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
-  className?: string;
+  isValid?: boolean;
+  showValidation?: boolean;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export function Input({ className, ...props }: Props) {
+export function Input({ className, disabled, ...props }: Props) {
+  //TODO: add validation symbols
+
   return (
     <input
+      disabled={disabled}
       className={twMerge(
-        "rounded-lg bg-foreground p-2 text-text-primary placeholder-text",
+        "w-[300px] rounded-lg bg-foreground px-4 py-2 text-text-primary placeholder-text outline-text-primary",
         className,
+        disabled && "opacity-50",
       )}
       {...props}
     />
