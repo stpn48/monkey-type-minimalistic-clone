@@ -2,7 +2,8 @@
 
 import { ToggleThemeButton } from "@/components/toggle-theme-button";
 import { useTypingField } from "@/context/use-typing-field";
-import React from "react";
+import { CodeXml } from "lucide-react";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 export function Footer() {
@@ -15,7 +16,14 @@ export function Footer() {
         userTyping && "opacity-0",
       )}
     >
-      <h1>footer</h1>
+      <Link
+        href="https://github.com/stpn48/monkey-type-minimalistic-clone"
+        target="_blank"
+        rel="noreferrer"
+        className="cursor-pointer"
+      >
+        <CodeXml className="size-5 hover:text-primary" />
+      </Link>
       <ToggleThemeButton />
     </div>
   );
