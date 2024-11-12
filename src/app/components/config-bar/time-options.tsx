@@ -1,6 +1,6 @@
 import { ConfigButton } from "@/app/components/config-bar/config-button";
 import { ConfigSection } from "@/app/components/config-bar/config-section";
-import { useConfigState } from "@/context/useConfigState";
+import { useConfigState } from "@/context/use-config-state";
 
 export function TimeOptions() {
   const { timeDuration, setTimeDuration } = useConfigState();
@@ -9,7 +9,11 @@ export function TimeOptions() {
   return (
     <ConfigSection>
       {durations.map((duration) => (
-        <ConfigButton key={duration} active={timeDuration === duration} onClick={() => setTimeDuration(duration)}>
+        <ConfigButton
+          key={duration}
+          active={timeDuration === duration}
+          onClick={() => setTimeDuration(duration)}
+        >
           {duration}
         </ConfigButton>
       ))}
