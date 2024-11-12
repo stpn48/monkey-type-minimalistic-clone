@@ -5,6 +5,7 @@ import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
 import { Settings, UserRound } from "lucide-react";
+import Link from "next/link";
 import { useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -36,7 +37,9 @@ export function Header() {
 
       <ul className="flex items-center gap-4">
         <li>
-          <UserRound className="size-5" />
+          <Link href={"/login"}>
+            <UserRound className="size-5 hover:text-primary" />
+          </Link>
         </li>
         <li>
           <Settings className="size-5" />
