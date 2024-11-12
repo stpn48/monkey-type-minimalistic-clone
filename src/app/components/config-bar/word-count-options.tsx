@@ -2,7 +2,7 @@
 
 import { ConfigButton } from "@/app/components/config-bar/config-button";
 import { ConfigSection } from "@/app/components/config-bar/config-section";
-import { useConfigState } from "@/context/useConfigState";
+import { useConfigState } from "@/context/use-config-state";
 
 export function WordsOptions() {
   const { wordCount, setWordCount } = useConfigState();
