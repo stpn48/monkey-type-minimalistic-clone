@@ -1,6 +1,6 @@
 "use server";
 
-import { QuoteLength } from "@/context/useConfigState";
+import { QuoteLength } from "@/context/use-config-state";
 import prisma from "@/utils/prisma";
 
 export async function getQuote(length: QuoteLength) {
