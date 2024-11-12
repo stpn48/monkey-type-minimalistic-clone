@@ -1,5 +1,5 @@
+import { useConfigState } from "@/context/use-config-state";
 import { useStatisticsStore } from "@/context/use-statistics";
-import { useConfigState } from "@/context/useConfigState";
 
 type Props = {};
 
