@@ -1,5 +1,5 @@
 import { ReactQueryProvider } from "@/components/react-query-provider";
-import { ConfigStateProvider } from "@/context/useConfigState";
+import { ConfigStateProvider } from "@/context/use-config-state";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { PropsWithChildren } from "react";
