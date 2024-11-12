@@ -16,6 +16,7 @@ export function getStatistics() {
     mistakes,
     setAccuracy,
     setMissedLetters,
+    totalWords,
   } = useStatisticsStore();
 
   const { startedTypingTime, finishedTypingTime, words, userWords } = useTypingField();
@@ -23,7 +24,7 @@ export function getStatistics() {
 
   useEffect(() => {
     if (!words.length || !userWords.length) {
-      navigateWithParams("/");
+      navigateWithParams("/", "replace");
       return;
     }
 
@@ -36,18 +37,22 @@ export function getStatistics() {
     setIncorrectWords(statistics.totalIncorrectWords);
     setMissedLetters(statistics.totalMissedLetters);
 
-    setWpm(
-      calculateWpm(
-        statistics.totalCorrectWords + statistics.totalIncorrectWords,
-        startedTypingTime!,
-        finishedTypingTime!,
-      ),
-    );
+    if (startedTypingTime && finishedTypingTime) {
+      setWpm(calculateWpm(totalWords, startedTypingTime, finishedTypingTime));
+    }
 
     setAccuracy(calculateAccuracy(statistics.totalCorrectLetters, mistakes));
 
     setDuration((finishedTypingTime! - startedTypingTime!) / 1000);
-  }, [words, userWords, navigateWithParams, startedTypingTime, finishedTypingTime, mistakes]);
+  }, [
+    words,
+    userWords,
+    navigateWithParams,
+    totalWords,
+    startedTypingTime,
+    finishedTypingTime,
+    mistakes,
+  ]);
 }
 
 function calculateWpm(totalWords: number, startedTypingTime: number, finishedTypingTime: number) {

@@ -14,7 +14,7 @@ export function ToggleThemeButton() {
         setTheme(e.target.value);
       }
     },
-    [setTheme],
+    [setTheme, isMounted],
   );
 
   useEffect(() => {

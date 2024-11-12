@@ -16,12 +16,12 @@ export function useModeHandler() {
     if (mode === "wordCount") {
       if (totalWords === wordCount - 1 && activeLetterIndex === words[activeWordIndex].length) {
         setFinishedTypingTime(new Date().getTime());
-        navigateWithParams("/results");
+        navigateWithParams("/results", "replace");
       }
     } else if (mode === "quote") {
       if (totalWords === words.length - 1 && activeLetterIndex === words[activeWordIndex].length) {
         setFinishedTypingTime(new Date().getTime());
-        navigateWithParams("/results");
+        navigateWithParams("/results", "replace");
       }
     }
   }, [totalWords, wordCount, mode, navigateWithParams, words, activeWordIndex, activeLetterIndex]);

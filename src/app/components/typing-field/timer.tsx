@@ -31,7 +31,7 @@ export default function Timer() {
     if (time === 0) {
       clearInterval(intervalId!);
       setFinishedTypingTime(new Date().getTime());
-      navigateWithParams("/results");
+      navigateWithParams("/results", "replace");
     }
   }, [time, navigateWithParams, intervalId]);
 

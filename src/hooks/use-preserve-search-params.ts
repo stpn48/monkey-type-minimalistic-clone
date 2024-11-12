@@ -6,10 +6,14 @@ export function usePreserveSearchParams() {
   const searchParams = useSearchParams();
 
   const navigateWithParams = useCallback(
-    (newPath: string) => {
+    (newPath: string, method: "push" | "replace" = "push") => {
       const params = new URLSearchParams(searchParams as any);
 
-      router.push(`${newPath}?${params.toString()}`);
+      if (method === "push") {
+        router.push(`${newPath}?${params.toString()}`);
+      } else if (method === "replace") {
+        router.replace(`${newPath}?${params.toString()}`);
+      }
     },
     [router, searchParams],
   );

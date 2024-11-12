@@ -14,12 +14,7 @@ export function useGenerateWords() {
 
   const { generateWords, generateQuote, isLoading } = useWordsGenerator();
 
-  // TODO: Fix when generating new wowrds with numbers it adds 3 rows instead of 1
   initInfiniteWordsHandler(includeNumbers, generateWords);
-
-  useEffect(() => {
-    console.log("total generated", totalWordsGenerated);
-  }, [totalWordsGenerated]);
 
   const generateInitialWords = useCallback(() => {
     switch (mode) {

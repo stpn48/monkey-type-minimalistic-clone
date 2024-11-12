@@ -2,13 +2,14 @@
 
 import { Caret } from "@/app/components/typing-field/caret";
 import { Word } from "@/app/components/typing-field/word";
+import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { useConfigState } from "@/context/useConfigState";
 import { useContainerWidth } from "@/hooks/use-contaier-width";
 import { useGameLogic } from "@/hooks/use-game-logic";
 import { useGenerateWords } from "@/hooks/use-generate-words";
 import { LoaderPinwheel } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 const CapsLockAlert = React.lazy(() => import("@/app/components/caps-lock-alert"));
 const Timer = React.lazy(() => import("@/app/components/typing-field/timer"));

@@ -1,13 +1,24 @@
 "use client";
 
 import { Logo } from "@/components/icons";
+import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
-import { motion } from "framer-motion";
+import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
 import { Settings, UserRound } from "lucide-react";
+import { useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function Header() {
   const { userTyping } = useTypingField();
+  const { navigateWithParams } = usePreserveSearchParams();
+  const { resetTypingField } = useTypingField();
+  const { resetStatistics } = useStatisticsStore();
+
+  const handleLogoClick = useCallback(() => {
+    navigateWithParams("/", "replace");
+    resetStatistics();
+    resetTypingField();
+  }, [navigateWithParams, resetStatistics, resetTypingField]);
 
   return (
     <header
@@ -16,9 +27,9 @@ export function Header() {
         userTyping && "opacity-0",
       )}
     >
-      <div className="flex items-center gap-2">
+      <div onClick={handleLogoClick} className="flex cursor-pointer items-center gap-2">
         <Logo />
-        <h1 className="text-text-primary font-geist-sans text-2xl font-bold">tpye</h1>
+        <h1 className="font-geist-sans text-2xl font-bold text-text-primary">tpye</h1>
       </div>
 
       <div className="flex-1" />
