@@ -1,7 +1,7 @@
 "use client";
 
+import { useConfigState } from "@/context/use-config-state";
 import { useTypingField } from "@/context/use-typing-field";
-import { useConfigState } from "@/context/useConfigState";
 import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
 import { formatTime } from "@/utils/format-time";
 import { useEffect, useState } from "react";
