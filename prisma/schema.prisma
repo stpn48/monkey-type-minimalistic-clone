@@ -13,6 +13,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model UserData {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  username  String
+  stats     Stats[]
+}
+
+model Stats {
+  id                       String    @id @default(uuid())
+  allTimeWpm               Float
+  totalTestsCompleted      Int
+  totalTestsStarted        Int
+  totalTimeTyped           Int
+  totalWordsTyped          Int
+  totalLettersTyped        Int
+  totalCorrectLettersTyped Int
+  totalMistakes            Int
+  UserData                 UserData? @relation(fields: [userDataId], references: [id])
+  userDataId               String?
+}
+
 model Quote {
   id        String   @id @default(uuid())
   quote     String
