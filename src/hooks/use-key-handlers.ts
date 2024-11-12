@@ -1,8 +1,8 @@
 "use client";
 
+import { useConfigState } from "@/context/use-config-state";
 import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
-import { useConfigState } from "@/context/useConfigState";
 import { useCallback, useEffect, useRef } from "react";
 
 export function useKeyHandlers() {

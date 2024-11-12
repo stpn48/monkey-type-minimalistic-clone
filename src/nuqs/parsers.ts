@@ -1,4 +1,4 @@
-import { Mode, QuoteLength } from "@/context/useConfigState";
+import { Mode, QuoteLength } from "@/context/use-config-state";
 import { createParser } from "nuqs";
 
 export const modeParser = createParser<Mode>({

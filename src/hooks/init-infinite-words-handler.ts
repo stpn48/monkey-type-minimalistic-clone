@@ -1,5 +1,5 @@
+import { useConfigState } from "@/context/use-config-state";
 import { useTypingField } from "@/context/use-typing-field";
-import { useConfigState } from "@/context/useConfigState";
 import { useCallback, useEffect } from "react";
 
 export function initInfiniteWordsHandler(

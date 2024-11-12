@@ -1,6 +1,6 @@
 import { getQuote } from "@/app/actions/get-quote";
+import { QuoteLength } from "@/context/use-config-state";
 import { useTypingField } from "@/context/use-typing-field";
-import { QuoteLength } from "@/context/useConfigState";
 import { generate as generateRandomWords } from "random-words";
 import { useCallback, useTransition } from "react";
 

@@ -2,58 +2,61 @@
 
 // const quotes = [
 //   {
-//     quote: "The only limit to our realization of tomorrow is our doubts of today.",
-//     author: "Franklin D. Roosevelt",
+//     quote: "It is not the mountain we conquer but ourselves.",
+//     author: "Edmund Hillary",
 //     length: "medium",
 //   },
 //   {
-//     quote:
-//       "In the end, we will remember not the words of our enemies, but the silence of our friends.",
-//     author: "Martin Luther King Jr.",
+//     quote: "You miss 100% of the shots you don't take.",
+//     author: "Wayne Gretzky",
 //     length: "medium",
 //   },
 //   {
-//     quote: "Success is not final, failure is not fatal: It is the courage to continue that counts.",
-//     author: "Winston Churchill",
+//     quote: "Life isn't about finding yourself. Life is about creating yourself.",
+//     author: "George Bernard Shaw",
 //     length: "medium",
-//   },
-//   {
-//     quote:
-//       "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
-//     author: "Ralph Waldo Emerson",
-//     length: "long",
 //   },
 //   {
 //     quote:
 //       "The greatest glory in living lies not in never falling, but in rising every time we fall.",
 //     author: "Nelson Mandela",
+//     length: "long",
+//   },
+//   {
+//     quote: "Only those who dare to fail greatly can ever achieve greatly.",
+//     author: "Robert F. Kennedy",
 //     length: "medium",
 //   },
 //   {
-//     quote: "Life is what happens when you're busy making other plans.",
-//     author: "John Lennon",
-//     length: "short",
+//     quote: "Do not wait to strike till the iron is hot; but make it hot by striking.",
+//     author: "William Butler Yeats",
+//     length: "medium",
 //   },
 //   {
-//     quote: "The purpose of our lives is to be happy.",
+//     quote: "If you want to go fast, go alone. If you want to go far, go together.",
+//     author: "African Proverb",
+//     length: "medium",
+//   },
+//   {
+//     quote: "Believe you can and you're halfway there.",
+//     author: "Theodore Roosevelt",
+//     length: "medium",
+//   },
+//   {
+//     quote: "Happiness is not something ready made. It comes from your own actions.",
 //     author: "Dalai Lama",
-//     length: "short",
+//     length: "medium",
 //   },
 //   {
-//     quote: "It is our choices that show what we truly are, far more than our abilities.",
-//     author: "J.K. Rowling",
+//     quote: "The only way to do great work is to love what you do.",
+//     author: "Steve Jobs",
 //     length: "medium",
 //   },
 //   {
 //     quote:
-//       "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+//       "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
 //     author: "Ralph Waldo Emerson",
-//     length: "medium",
-//   },
-//   {
-//     quote: "The journey of a thousand miles begins with one step.",
-//     author: "Lao Tzu",
-//     length: "short",
+//     length: "long",
 //   },
 // ];
 

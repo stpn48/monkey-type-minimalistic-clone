@@ -1,6 +1,6 @@
 import { Letter } from "@/app/components/typing-field/letter";
+import { useConfigState } from "@/context/use-config-state";
 import { useTypingField } from "@/context/use-typing-field";
-import { useConfigState } from "@/context/useConfigState";
 import { useCallback, useEffect } from "react";
 import { initInfiniteWordsHandler } from "./init-infinite-words-handler";
 import { useDebouncedResize } from "./use-debounced-resize";
