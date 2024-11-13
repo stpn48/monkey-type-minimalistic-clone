@@ -32,7 +32,7 @@ export function LoginForm() {
       startLoggingIn(async () => {
         await login(email, password);
         toast.success("Login successful");
-        router.push("/account");
+        router.push("/profile/" + username);
       });
     },
     [router],
