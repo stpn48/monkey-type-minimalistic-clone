@@ -10,7 +10,7 @@ export function Button({ className, children, disabled, ...props }: Props) {
       className={twMerge(
         "rounded-lg bg-text-primary px-4 py-2",
         className,
-        disabled && "opacity-50",
+        disabled && "cursor-not-allowed opacity-50",
       )}
     >
       {children}
