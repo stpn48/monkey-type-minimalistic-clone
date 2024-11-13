@@ -9,7 +9,7 @@ type GetUserDataResponse = {
   data: (UserData & { stats: Stats }) | null;
 };
 
-export async function getUserData(): Promise<GetUserDataResponse> {
+export async function getUserData(username: string): Promise<GetUserDataResponse> {
   const user = await getUser();
 
   if (!user) {
@@ -18,7 +18,7 @@ export async function getUserData(): Promise<GetUserDataResponse> {
 
   const userData = await prisma.userData.findFirst({
     where: {
-      id: user.id,
+      username: username,
     },
     include: {
       stats: true,
