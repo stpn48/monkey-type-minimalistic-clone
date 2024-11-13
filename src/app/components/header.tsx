@@ -24,7 +24,7 @@ export function Header() {
   return (
     <header
       className={twMerge(
-        "opacity-1 fixed top-8 flex w-full px-20 transition-opacity duration-300",
+        "opacity-1 fixed left-0 top-8 flex w-screen px-20 transition-opacity duration-300",
         userTyping && "opacity-0",
       )}
     >
