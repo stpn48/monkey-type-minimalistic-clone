@@ -27,7 +27,7 @@ export function TypingField() {
 
   if (isLoading) {
     return (
-      <div className="mt-20 flex w-full justify-center">
+      <div className="mt-20 flex justify-center">
         <LoaderPinwheel className="animate-spin" />
       </div>
     );
@@ -35,12 +35,12 @@ export function TypingField() {
 
   return (
     <>
-      <div className="relative flex h-[80px] w-full items-center">
+      <div className="relative flex h-[80px] items-center">
         {mode === "time" && startTimer && <Timer />}
         {mode === "wordCount" && userTyping && <WordsLeft />}
         <CapsLockAlert />
       </div>
-      <div ref={containerRef} className="flex flex-wrap gap-4">
+      <div ref={containerRef} className="flex w-full flex-wrap gap-4">
         {userTyping && <Caret />}
 
         {words.map((word, wordIndex) => (
