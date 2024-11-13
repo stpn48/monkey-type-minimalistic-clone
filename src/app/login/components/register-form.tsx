@@ -56,7 +56,7 @@ export function RegisterForm() {
         return;
       }
       toast.success("Registration successful");
-      router.push("/account");
+      router.push("/profile/" + username);
     });
   };
 
