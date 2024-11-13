@@ -6,10 +6,7 @@ import { Session, User } from "@supabase/supabase-js";
 
 type SignUpResponse = {
   error: null | Error;
-  data: null | {
-    session: Session | null;
-    user: User | null;
-  };
+  user: User | null;
 };
 
 export async function signUp(
@@ -21,15 +18,19 @@ export async function signUp(
 
   const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.signUp({
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.signUp({
     email,
     password,
   });
 
-  if (error) return { error, data: null };
+  if (error || !user) return { error, user: null };
 
   await prisma.userData.create({
     data: {
+      id: user.id,
       username,
       stats: {
         create: {
@@ -48,5 +49,5 @@ export async function signUp(
 
   await supabase.auth.signInWithPassword({ email, password });
 
-  return { error: null, data };
+  return { error: null, user };
 }
