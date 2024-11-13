@@ -1,11 +1,10 @@
-import { Button } from "@/components/button";
-import { Input } from "@/components/input";
+import { LoginForm } from "./components/login-form";
 import { RegisterForm } from "./components/register-form";
 
 export default function LoginPage() {
   return (
     <div className="flex flex-1 items-center justify-center font-geist-mono text-base text-text">
-      <section className="mb-32 mt-20 flex w-[70%] flex-col justify-between md:mt-0 md:flex-row">
+      <section className="mb-[110px] mt-20 flex w-[80%] flex-col justify-between gap-10 lg:mt-0 lg:flex-row">
         {/* Register section */}
         <section className="flex flex-col gap-2">
           <h1>Register</h1>
@@ -15,11 +14,7 @@ export default function LoginPage() {
         {/* Login section */}
         <section className="mt-10 flex flex-col gap-2 md:mt-0">
           <h1>Login</h1>
-          <form className="flex flex-col gap-2" action="">
-            <Input placeholder="email" type="email" name="email" />
-            <Input placeholder="password" type="password" name="password" />
-            <Button>Login</Button>
-          </form>
+          <LoginForm />
         </section>
       </section>
     </div>
