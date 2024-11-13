@@ -1,5 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { UserData } from "./../../../node_modules/.prisma/client/index.d";
+import { getUser } from "./server";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -31,16 +33,27 @@ export async function updateSession(request: NextRequest) {
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
+  const user = await getUser();
 
-  // if (!user && !request.nextUrl.pathname.startsWith("/signup")) {
-  //   // no user, potentially respond by redirecting the user to the login page
-  //   const url = request.nextUrl.clone();
-  //   url.pathname = "/signup";
-  //   return NextResponse.redirect(url);
-  // }
+  const username = await supabase
+    .schema("public")
+    .from("UserData")
+    .select("username")
+    .eq("id", user?.id) // replace `id` with the correct field that identifies the user
+    .single();
+  console.log("username", username);
+
+  if (!user && request.nextUrl.pathname.startsWith("/account")) {
+    // user not logged in, he cannot access his account, redirect to login
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  } else if (user && request.nextUrl.pathname.startsWith("/login")) {
+    // user is logged in, he cannot access the login page, redirect to account
+    const url = request.nextUrl.clone();
+    url.pathname = "/profile/" + username;
+    return NextResponse.redirect(url);
+  }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
   // creating a new response object with NextResponse.next() make sure to:
