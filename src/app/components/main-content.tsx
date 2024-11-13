@@ -3,7 +3,7 @@ import { ConfigBar } from "./config-bar/config-bar";
 
 export function MainContent() {
   return (
-    <main className="mt-10 flex flex-col px-20">
+    <main className="flex w-full flex-col">
       <ConfigBar />
       <TypingField />
     </main>
