@@ -1,4 +1,5 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import exp from "constants";
 import { cookies } from "next/headers";
 
 export async function createClient() {
@@ -26,4 +27,14 @@ export async function createClient() {
       },
     },
   );
+}
+
+export async function getUser() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return user;
 }
