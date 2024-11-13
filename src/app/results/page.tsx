@@ -5,7 +5,7 @@ type Props = {};
 
 export default function ResultsPage({}: Props) {
   return (
-    <div className="px-20">
+    <div className=" ">
       <Statistics />
     </div>
   );
