@@ -1,15 +1,11 @@
 "use server";
 
+import prisma from "@/utils/prisma";
 import { createClient } from "@/utils/supabase/server";
-import { Session, User, WeakPassword } from "@supabase/supabase-js";
 
 type LoginResponse = {
   error: null | Error;
-  data: null | {
-    session: Session;
-    user: User;
-    weakPassword?: WeakPassword;
-  };
+  username: string | null;
 };
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
@@ -17,12 +13,21 @@ export async function login(email: string, password: string): Promise<LoginRespo
 
   const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data: user, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  if (error) return { error, data: null };
+  if (error) return { error, username: null };
 
-  return { error: null, data };
+  const data = await prisma.userData.findFirst({
+    where: {
+      id: user.user.id,
+    },
+    select: { username: true },
+  });
+
+  console.log("data", data?.username);
+
+  return { error: null, username: data?.username || null };
 }
