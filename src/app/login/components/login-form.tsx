@@ -30,7 +30,13 @@ export function LoginForm() {
       }
 
       startLoggingIn(async () => {
-        await login(email, password);
+        const { username, error } = await login(email, password);
+
+        if (error || !username) {
+          toast.error(error?.message || "Login failed");
+          return;
+        }
+
         toast.success("Login successful");
         router.push("/profile/" + username);
       });
