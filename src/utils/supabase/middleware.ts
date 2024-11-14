@@ -1,7 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { UserData } from "./../../../node_modules/.prisma/client/index.d";
-import { getUser } from "./server";
+import prisma from "../prisma";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -33,25 +32,36 @@ export async function updateSession(request: NextRequest) {
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
-  const user = await getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  const username = await supabase
-    .schema("public")
-    .from("UserData")
-    .select("username")
-    .eq("id", user?.id) // replace `id` with the correct field that identifies the user
-    .single();
-  console.log("username", username);
+  console.log(user?.id);
 
   if (!user && request.nextUrl.pathname.startsWith("/account")) {
     // user not logged in, he cannot access his account, redirect to login
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
-  } else if (user && request.nextUrl.pathname.startsWith("/login")) {
+  }
+
+  if (user && request.nextUrl.pathname.startsWith("/login")) {
+    const data = await prisma.userData.findFirst({
+      where: {
+        id: user?.id,
+      },
+      select: {
+        username: true,
+      },
+    });
+
+    if (!data) {
+      console.log("data not found");
+      return NextResponse.redirect("/login");
+    }
     // user is logged in, he cannot access the login page, redirect to account
     const url = request.nextUrl.clone();
-    url.pathname = "/profile/" + username;
+    url.pathname = "/profile/" + data.username;
     return NextResponse.redirect(url);
   }
 
