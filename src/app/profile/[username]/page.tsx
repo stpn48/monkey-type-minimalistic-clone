@@ -1,6 +1,8 @@
 import { getUserData } from "@/app/actions/get-user-data";
+import { Statistic } from "@/components/statistic";
 import Image from "next/image";
-import React from "react";
+import { MainInfo } from "./components/main-stats";
+import { SignOutButton } from "./components/sign-out-button";
 
 type Props = {
   params: {
@@ -9,14 +11,20 @@ type Props = {
 };
 
 export default async function AccountPage({ params }: Props) {
+  const { username } = await params;
   const { data, error } = await getUserData(params.username);
+
+  if (!data || !data.stats || error) {
+    return <div>User not found</div>;
+  }
+
   return (
-    <div className="">
-      <section className="bg-foreground">
-        <Image src={data?.avatarUrl || ""} alt="avatar" width={100} height={100} />
-        <h1>{data?.username}</h1>
+    <div className="flex flex-col gap-10 font-geist-mono">
+      <section className="flex gap-10">
+        <MainInfo username={username} stats={data.stats} />
+        {/* TODO: Activity field like on github */}
       </section>
-      <section></section>
+      <SignOutButton /> {/* TODO: Move to the dropdown */}
     </div>
   );
 }
