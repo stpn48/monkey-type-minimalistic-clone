@@ -5,7 +5,7 @@ import { useTypingField } from "@/context/use-typing-field";
 import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
 import { useEffect } from "react";
 import { getStatistics } from "../hooks/get-statistics";
-import { Statistic } from "./statistic";
+import { Statistic } from "../../../components/statistic";
 
 export function Statistics() {
   getStatistics();
