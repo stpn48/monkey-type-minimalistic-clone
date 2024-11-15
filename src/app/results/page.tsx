@@ -1,9 +1,6 @@
-import React from "react";
 import { Statistics } from "./components/statistics";
 
-type Props = {};
-
-export default function ResultsPage({}: Props) {
+export default function ResultsPage() {
   return (
     <div className=" ">
       <Statistics />
