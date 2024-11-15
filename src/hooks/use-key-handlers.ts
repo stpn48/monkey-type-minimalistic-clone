@@ -1,5 +1,6 @@
 "use client";
 
+import { incrementTestsStarted } from "@/app/actions/increment-tests-started";
 import { useConfigState } from "@/context/use-config-state";
 import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
@@ -38,6 +39,8 @@ export function useKeyHandlers() {
       }
 
       if (startedTypingTime === null) {
+        const increment = async () => await incrementTestsStarted();
+        increment();
         setStartedTypingTime(new Date().getTime());
       }
       // add letter to active word, and move to next letter
