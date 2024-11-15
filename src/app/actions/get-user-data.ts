@@ -6,23 +6,15 @@ import { Stats, UserData } from "@prisma/client";
 
 type GetUserDataResponse = {
   error: string | null;
-  data: (UserData & { stats: Stats }) | null;
+  data: (UserData & { stats: Stats }) | null | undefined;
 };
 
 export async function getUserData(username: string): Promise<GetUserDataResponse> {
-  const user = await getUser();
-
-  if (!user) {
-    return { error: "User not found", data: null };
-  }
-
   const userData = await prisma.userData.findFirst({
     where: {
       username: username,
     },
-    include: {
-      stats: true,
-    },
+    include: { stats: true },
   });
 
   if (!userData) {
