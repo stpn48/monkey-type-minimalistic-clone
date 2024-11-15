@@ -1,4 +1,4 @@
-import { Header } from "@/app/components/header";
+import { Header } from "@/app/components/header/header";
 import { Providers } from "@/components/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
