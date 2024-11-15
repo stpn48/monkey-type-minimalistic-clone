@@ -16,7 +16,7 @@ export function Day({ activityThisDay, dayDate }: Props) {
       )}
     >
       <div className="hidden group-hover:block">
-        <div className="padding-2 absolute -top-[60px] z-50 flex flex-col gap-2 rounded-lg bg-background text-xs opacity-75">
+        <div className="padding-2 absolute -top-[60px] z-50 flex flex-col gap-2 whitespace-nowrap rounded-lg bg-background bg-opacity-80 p-2 text-xs text-text-primary">
           <p>{dayDate.toLocaleDateString()}</p>
           <p>
             {activityThisDay?.testsCompleted
@@ -29,24 +29,21 @@ export function Day({ activityThisDay, dayDate }: Props) {
   );
 }
 
+// TODO: Add more colors, to theme
 function getColorStrength(testsCompleted: number) {
-  if (!testsCompleted) return "bg-foreground";
+  if (!testsCompleted) return "bg-background";
 
   if (testsCompleted < 5) {
-    return "bg-green-900";
+    return "bg-primary/40";
   }
 
   if (testsCompleted < 10) {
-    return "bg-green-700";
+    return "bg-primary/60";
   }
 
   if (testsCompleted < 15) {
-    return "bg-green-600";
+    return "bg-primary/80";
   }
 
-  if (testsCompleted < 20) {
-    return "bg-green-500";
-  }
-
-  return "bg-green-400";
+  return "bg-primary";
 }

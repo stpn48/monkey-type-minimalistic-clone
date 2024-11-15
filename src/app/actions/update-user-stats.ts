@@ -72,7 +72,7 @@ export async function updateUserStats(stats: Stats): Promise<Response> {
     console.log("updating activity or creating new one");
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0); // Reset to start of the day
-    todayStart.setDate(todayStart.getDate() + 1);
+    todayStart.setDate(todayStart.getDate());
 
     await prisma.activity.upsert({
       where: {
