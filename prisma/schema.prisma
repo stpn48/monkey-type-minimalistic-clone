@@ -15,12 +15,13 @@ datasource db {
 }
 
 model UserData {
-  id        String   @id // mirroring supabase user id from auth table
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String     @id // mirroring supabase user id from auth table
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  activity  Activity[]
   username  String
-  avatarUrl String   @default("")
-  stats     Stats    @relation(fields: [statsId], references: [id])
+  avatarUrl String     @default("")
+  stats     Stats      @relation(fields: [statsId], references: [id])
   statsId   String
 }
 
@@ -36,6 +37,16 @@ model Stats {
   totalMistakes            Int        @default(0)
   userDataId               String?
   UserData                 UserData[]
+}
+
+model Activity {
+  id             String    @id @default(uuid())
+  createdAt      DateTime
+  testsCompleted Int
+  UserData       UserData? @relation(fields: [userDataId], references: [id])
+  userDataId     String?
+
+  @@unique([createdAt, userDataId])
 }
 
 model Quote {
