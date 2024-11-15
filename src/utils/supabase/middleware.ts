@@ -1,3 +1,4 @@
+import { signOut } from "@/app/actions/supabase-auth/sign-out";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import prisma from "../prisma";
@@ -48,20 +49,16 @@ export async function updateSession(request: NextRequest) {
   if (user && request.nextUrl.pathname.startsWith("/login")) {
     const data = await prisma.userData.findFirst({
       where: {
-        id: user?.id,
+        id: user.id,
       },
       select: {
         username: true,
       },
     });
 
-    if (!data) {
-      console.log("data not found");
-      return NextResponse.redirect("/login");
-    }
     // user is logged in, he cannot access the login page, redirect to account
     const url = request.nextUrl.clone();
-    url.pathname = "/profile/" + data.username;
+    url.pathname = "/profile/" + data?.username;
     return NextResponse.redirect(url);
   }
 
