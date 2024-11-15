@@ -6,5 +6,9 @@ import React from "react";
 type Props = {};
 
 export function SignOutButton({}: Props) {
-  return <button onClick={async () => await signOut()}>logout</button>;
+  return (
+    <button className="hover:text-incorrect-text" onClick={async () => await signOut()}>
+      Sign Out
+    </button>
+  );
 }

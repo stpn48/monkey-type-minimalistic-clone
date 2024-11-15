@@ -30,7 +30,6 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: "hsl(var(--primary))",
-        logoText: "hsl(var(--logoText))",
         text: "hsl(var(--text))",
         "text-primary": "hsl(var(--text-primary))",
         "incorrect-text": "hsl(var(--incorrect-text))",

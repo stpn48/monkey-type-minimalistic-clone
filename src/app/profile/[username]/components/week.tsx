@@ -11,7 +11,7 @@ type Props = {
 
 export function Week({ week, activities }: Props) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-[2px]">
       {week.map((day, dayIndex) => {
         // find the activity for this day
         const activityThisDay = activities.find(

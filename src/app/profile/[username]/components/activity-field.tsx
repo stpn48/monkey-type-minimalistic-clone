@@ -20,8 +20,8 @@ export async function ActivityField({ userId }: Props) {
   });
 
   return (
-    <div className="flex w-full flex-col items-center font-geist-mono">
-      <h1 className="text-text">YOUR ACTIVITY</h1>
+    <div className="flex flex-col items-center gap-6 font-geist-mono">
+      <h1 className="text-text">ACTIVITY</h1>
       <Field activities={activities} />
     </div>
   );

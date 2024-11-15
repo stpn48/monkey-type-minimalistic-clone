@@ -18,10 +18,9 @@ export default async function AccountPage({ params }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-10 font-geist-mono">
+    <div className="flex w-full flex-col gap-10 font-geist-mono">
       <MainInfo username={username} stats={data.stats} />
       <ActivityField userId={data.id} />
-      <SignOutButton /> {/* TODO: Move to the dropdown */}
     </div>
   );
 }

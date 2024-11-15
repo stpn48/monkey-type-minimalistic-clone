@@ -17,9 +17,9 @@ type Props = {
 
 export function MainInfo({ username, stats }: Props) {
   return (
-    <section className="flex w-[400px] flex-col gap-10 rounded-lg bg-foreground p-8">
+    <section className="flex flex-col gap-10 rounded-lg bg-foreground p-10">
       <h1 className="text-3xl text-text-primary">{username}</h1>
-      <div className="grid grid-cols-2 gap-x-20 gap-y-10">
+      <div className="grid grid-cols-1 gap-x-20 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         <Statistic label="ALL TIME WPM" value={stats.allTimeWpm.toFixed(2).toString()} />
         <Statistic label="TOTAL TESTS COMPLETED" value={stats.totalTestsCompleted.toString()} />
         <Statistic label="TOTAL TESTS STARTED" value={stats.totalTestsStarted.toString()} />

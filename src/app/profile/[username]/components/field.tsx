@@ -1,5 +1,12 @@
 "use client";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Activity } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import { generateWeeksForMonths } from "../utils/generate-weeks-for-moths";
@@ -23,27 +30,35 @@ export function Field({ activities }: Props) {
   }, [months]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <select className="w-fit" value={months} onChange={(e) => setMonths(Number(e.target.value))}>
-        <option value={12}>12 months</option>
-        <option value={6}>6 months</option>
-        <option value={3}>3 months</option>
-        <option value={1}>1 month</option>
+    <>
+      {/* SELECT MONTHS */}
+      <select
+        name="months"
+        className="w-fit rounded-md bg-foreground" // TODO: Add a custom select component
+        id="months"
+        onChange={(e) => setMonths(Number(e.target.value))}
+      >
+        <option value="12">12 months</option>
+        <option value="6">6 months</option>
+        <option value="3">3 months</option>
+        <option value="1">1 month</option>
       </select>
-      <div className="flex h-fit w-fit gap-1 rounded-lg bg-foreground p-4">
-        <div>
-          <p>Monday</p>
-          <p>Tuesday</p>
-          <p>Wednesday</p>
-          <p>Thursday</p>
-          <p>Friday</p>
-          <p>Saturday</p>
-          <p>Sunday</p>
+
+      {/* FIELD */}
+      <div className="flex w-fit flex-col gap-4 bg-foreground p-4">
+        <div className="flex gap-4">
+          <div className="flex flex-col justify-center gap-2">
+            <p>Mon</p>
+            <p>Wed</p>
+            <p>Fri</p>
+          </div>
+          <div className="flex h-fit gap-[2px]">
+            {weeks.map((week, weekIndex) => (
+              <Week key={weekIndex} week={week} activities={activities} />
+            ))}
+          </div>
         </div>
-        {weeks.map((week, weekIndex) => (
-          <Week key={weekIndex} week={week} activities={activities} />
-        ))}
       </div>
-    </div>
+    </>
   );
 }

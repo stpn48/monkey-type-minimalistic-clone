@@ -11,11 +11,11 @@ export function Day({ activityThisDay, dayDate }: Props) {
   return (
     <div
       className={twMerge(
-        "group relative size-4 rounded-md",
+        "group relative size-3 overflow-visible rounded-sm",
         getColorStrength(activityThisDay?.testsCompleted || 0),
       )}
     >
-      <div className="hidden group-hover:block">
+      <div className="relative hidden group-hover:block">
         <div className="padding-2 absolute -top-[60px] z-50 flex flex-col gap-2 whitespace-nowrap rounded-lg bg-background bg-opacity-80 p-2 text-xs text-text-primary">
           <p>{dayDate.toLocaleDateString()}</p>
           <p>
