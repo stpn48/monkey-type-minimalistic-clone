@@ -1,8 +1,10 @@
+import { updateUserStats } from "@/app/actions/update-user-stats";
 import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
 import { calculateStatistics } from "@/utils/calculate-statistics";
-import { useEffect } from "react";
+import { useEffect, useMemo, useReducer, useRef, useTransition } from "react";
+import toast from "react-hot-toast";
 
 export function getStatistics() {
   const {
@@ -22,7 +24,17 @@ export function getStatistics() {
   const { startedTypingTime, finishedTypingTime, words, userWords } = useTypingField();
   const { navigateWithParams } = usePreserveSearchParams();
 
+  const memoWords = useMemo(() => words, [useTypingField]);
+  const memoUserWords = useMemo(() => userWords, [useTypingField]);
+
+  const [updatingStats, startUpdatingStats] = useTransition();
+
+  const effectExecuted = useRef(false);
+
   useEffect(() => {
+    if (effectExecuted.current) return;
+    effectExecuted.current = true;
+
     if (!words.length || !userWords.length || (!startedTypingTime && !finishedTypingTime)) {
       return;
     }
@@ -36,16 +48,33 @@ export function getStatistics() {
     setIncorrectWords(statistics.totalIncorrectWords);
     setMissedLetters(statistics.totalMissedLetters);
 
-    if (startedTypingTime && finishedTypingTime) {
-      setWpm(calculateWpm(totalWords, startedTypingTime, finishedTypingTime));
-    }
+    const wpm = calculateWpm(totalWords, startedTypingTime!, finishedTypingTime!);
+    const duration = (finishedTypingTime! - startedTypingTime!) / 1000;
+    const accuracy = calculateAccuracy(statistics.totalCorrectLetters, mistakes);
 
-    setAccuracy(calculateAccuracy(statistics.totalCorrectLetters, mistakes));
+    setWpm(wpm);
+    setAccuracy(accuracy);
+    setDuration(duration);
 
-    setDuration((finishedTypingTime! - startedTypingTime!) / 1000);
+    startUpdatingStats(async () => {
+      const { error } = await updateUserStats({
+        wpm,
+        totalWords,
+        correctLetters: statistics.totalCorrectLetters,
+        duration,
+        mistakes,
+      });
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      toast.success("Stats updated successfully"); //TODO: REMOVE FOR PROD
+    });
   }, [
-    words,
-    userWords,
+    memoWords,
+    memoUserWords,
     navigateWithParams,
     totalWords,
     startedTypingTime,
