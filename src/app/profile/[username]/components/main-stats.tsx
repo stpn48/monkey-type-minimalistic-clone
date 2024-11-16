@@ -1,4 +1,5 @@
 import { Statistic } from "@/components/statistic";
+import { formatTime } from "@/utils/format-time";
 import React from "react";
 
 type Props = {
@@ -23,7 +24,7 @@ export function MainInfo({ username, stats }: Props) {
         <Statistic label="ALL TIME WPM" value={stats.allTimeWpm.toFixed(2).toString()} />
         <Statistic label="TOTAL TESTS COMPLETED" value={stats.totalTestsCompleted.toString()} />
         <Statistic label="TOTAL TESTS STARTED" value={stats.totalTestsStarted.toString()} />
-        <Statistic label="TOTAL TIME TYPED" value={stats.totalTimeTyped.toString()} />
+        <Statistic label="TOTAL TIME TYPED" value={formatTime(stats.totalTimeTyped).toString()} />
         <Statistic label="TOTAL WORDS TYPED" value={stats.totalWordsTyped.toString()} />
         <Statistic label="TOTAL LETTERS TYPED" value={stats.totalLettersTyped.toString()} />
         <Statistic
