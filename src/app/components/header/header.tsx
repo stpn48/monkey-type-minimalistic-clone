@@ -1,6 +1,7 @@
-import { Settings } from "lucide-react";
+import { Search, Settings } from "lucide-react";
 import { HeaderContainer } from "./header-container";
 import { LogoButton } from "./logo-button";
+import { SearchButton } from "./search-button";
 import { UserButton } from "./user-button";
 
 export function Header() {
@@ -13,6 +14,9 @@ export function Header() {
       <ul className="flex items-center gap-4">
         <li>
           <UserButton />
+        </li>
+        <li>
+          <SearchButton />
         </li>
         <li>
           <Settings className="size-5" />
