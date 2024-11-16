@@ -3,6 +3,7 @@ import { Providers } from "@/components/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
+import { Footer } from "./components/footer";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -29,11 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} flex min-h-screen w-screen flex-col bg-background px-20 pt-[100px] font-geist-sans text-sm font-medium text-text ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} relative flex min-h-screen w-screen flex-col bg-background px-20 pt-[100px] font-geist-sans text-sm font-medium text-text ${geistMono.variable} antialiased`}
       >
         <Providers>
           <Header />
           {children}
+          <Footer />
 
           {/* TODO: Customize toaster styling */}
           <Toaster />
