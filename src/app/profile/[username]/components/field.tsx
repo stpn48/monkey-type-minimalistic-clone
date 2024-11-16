@@ -1,16 +1,17 @@
 "use client";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select } from "@/components/select";
 import { Activity } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import { generateWeeksForMonths } from "../utils/generate-weeks-for-moths";
 import { Week } from "./week";
+
+const monthOptions = [
+  { value: "12", label: "12 months" },
+  { value: "6", label: "6 months" },
+  { value: "3", label: "3 months" },
+  { value: "1", label: "1 month" },
+];
 
 type Props = {
   activities: Activity[];
@@ -32,17 +33,7 @@ export function Field({ activities }: Props) {
   return (
     <>
       {/* SELECT MONTHS */}
-      <select
-        name="months"
-        className="w-fit rounded-md bg-foreground" // TODO: Add a custom select component
-        id="months"
-        onChange={(e) => setMonths(Number(e.target.value))}
-      >
-        <option value="12">12 months</option>
-        <option value="6">6 months</option>
-        <option value="3">3 months</option>
-        <option value="1">1 month</option>
-      </select>
+      <Select options={monthOptions} onValueChange={(value) => setMonths(Number(value))} />
 
       {/* FIELD */}
       <div className="flex w-fit flex-col gap-4 bg-foreground p-4">
