@@ -21,7 +21,10 @@ export function Input({
   //TODO: add validation symbols
 
   return (
-    <div className="relative flex w-[300px] rounded-lg bg-foreground px-4 py-2 text-text-primary focus:ring-1 focus:ring-text-primary">
+    <div
+      tabIndex={1}
+      className="relative flex w-[300px] rounded-lg bg-foreground px-4 py-2 text-text-primary focus:ring-1 focus:ring-primary"
+    >
       <input
         disabled={disabled}
         className={twMerge(
