@@ -2,17 +2,14 @@ import prisma from "@/utils/prisma";
 import { getUser } from "@/utils/supabase/server";
 import { UserRound } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import { UserOptionsDropdown } from "./user-options-dropdown";
 
-type Props = {};
-
-export async function UserButton({}: Props) {
+export async function UserButton() {
   const user = await getUser();
 
-  const userData = await prisma.userData.findFirst({
+  const userData = await prisma.userData.findUnique({
     where: {
-      id: user?.id,
+      id: user?.id || "",
     },
     select: {
       id: true,
@@ -21,19 +18,21 @@ export async function UserButton({}: Props) {
   });
 
   return (
-    <div className="group relative">
+    <>
       {userData ? (
-        <div className="flex gap-2">
-          <p className="text-text group-hover:text-primary">{userData.username}</p>
-          <UserRound className="size-5 group-hover:text-primary" />
+        <div className="group relative flex flex-col">
+          <div className="flex cursor-pointer gap-2">
+            <p className="text-text group-hover:text-primary">{userData.username}</p>
+            <UserRound className="size-5 group-hover:text-primary" />
+          </div>
+
+          <UserOptionsDropdown />
         </div>
       ) : (
-        <UserRound className="size-5 group-hover:text-primary" />
+        <Link href={"/login"}>
+          <UserRound className="size-5 hover:text-primary" />
+        </Link>
       )}
-
-      <div className="hidden group-hover:block">
-        <UserOptionsDropdown />
-      </div>
-    </div>
+    </>
   );
 }
