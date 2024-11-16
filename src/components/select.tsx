@@ -14,6 +14,7 @@ type Props = {
   onValueChange?: (value: string) => void;
   defaultValue?: string;
   openDownwards?: boolean;
+  buttonContent?: "value" | "label";
 } & HtmlHTMLAttributes<HTMLDivElement>;
 
 export function Select({
@@ -22,13 +23,14 @@ export function Select({
   onValueChange,
   openDownwards,
   defaultValue,
+  buttonContent = "label",
   ...props
 }: Props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [value, setValue] = useState(defaultValue || options[0].value);
+  const [value, setValue] = useState(options[0]);
 
   useEffect(() => {
-    if (onValueChange) onValueChange(value);
+    if (onValueChange) onValueChange(value.value);
   }, [value, onValueChange]);
 
   return (
@@ -37,7 +39,7 @@ export function Select({
         className={twMerge("rounded-lg border-foreground/60 bg-foreground px-4 py-2", className)}
         onClick={() => setDropdownOpen((prev) => !prev)}
       >
-        {value}
+        {buttonContent === "value" ? value.value : value.label}
       </button>
 
       {dropdownOpen && (
@@ -60,9 +62,9 @@ export function Select({
                 key={optionIndex}
                 onClick={() => {
                   setDropdownOpen(false);
-                  setValue(option.value);
+                  setValue(option);
                 }}
-                className="cursor-pointer rounded-md bg-foreground px-4 py-1 text-center hover:bg-background"
+                className="cursor-pointer whitespace-nowrap rounded-md bg-foreground px-4 py-1 text-center hover:bg-background"
               >
                 {option.label}
               </div>
