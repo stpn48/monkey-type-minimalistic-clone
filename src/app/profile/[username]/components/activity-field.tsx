@@ -1,28 +1,56 @@
-import prisma from "@/utils/prisma";
-import { Field } from "./field";
+"use client";
+
+import { Select } from "@/components/select";
+import { Activity } from "@prisma/client";
+import React, { useEffect, useState } from "react";
+import { generateWeeksForMonths } from "../utils/generate-weeks-for-moths";
+import { Week } from "./week";
+
+const monthOptions = [
+  { value: "12", label: "12 months" },
+  { value: "6", label: "6 months" },
+  { value: "3", label: "3 months" },
+  { value: "1", label: "1 month" },
+];
 
 type Props = {
-  userId: string;
+  activities: Activity[];
 };
 
-export async function ActivityField({ userId }: Props) {
-  if (!userId) {
-    return <p>Unexpected error: userId is not defined</p>;
-  }
+type Week = {
+  date: Date;
+}[][];
 
-  const activities = await prisma.activity.findMany({
-    where: {
-      userDataId: userId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+export function ActivityField({ activities }: Props) {
+  const [months, setMonths] = useState(12);
+  const [weeks, setWeeks] = useState<Week>([]);
+
+  useEffect(() => {
+    const weeks = generateWeeksForMonths(months);
+    setWeeks(weeks);
+  }, [months]);
 
   return (
-    <div className="flex flex-col items-center gap-6 font-geist-mono">
-      <h1 className="text-text">ACTIVITY</h1>
-      <Field activities={activities} />
+    <div className="flex justify-center gap-4 font-geist-mono">
+      {/* SELECT MONTHS */}
+      <Select options={monthOptions} onValueChange={(value) => setMonths(Number(value))} />
+
+      {/* FIELD */}
+      <div className="flex w-fit flex-col gap-4 rounded-lg bg-foreground p-4">
+        <div className="flex gap-4">
+          <div className="flex flex-col justify-center gap-2">
+            <p>Mon</p>
+            <p>Wed</p>
+            <p>Fri</p>
+            <p>Sun</p>
+          </div>
+          <div className="flex h-fit gap-[2px]">
+            {weeks.map((week, weekIndex) => (
+              <Week key={weekIndex} week={week} activities={activities} />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
