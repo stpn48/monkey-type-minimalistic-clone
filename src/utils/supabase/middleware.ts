@@ -1,4 +1,3 @@
-import { signOut } from "@/app/actions/supabase-auth/sign-out";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import prisma from "../prisma";
@@ -39,13 +38,7 @@ export async function updateSession(request: NextRequest) {
 
   console.log(user?.id);
 
-  if (!user && request.nextUrl.pathname.startsWith("/account")) {
-    // user not logged in, he cannot access his account, redirect to login
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
-
+  // if user is logged in and going to login page, redirect to his profile page
   if (user && request.nextUrl.pathname.startsWith("/login")) {
     const data = await prisma.userData.findFirst({
       where: {
