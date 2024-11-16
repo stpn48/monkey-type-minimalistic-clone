@@ -1,7 +1,7 @@
 import { getUserData } from "@/app/actions/get-user-data";
+import prisma from "@/utils/prisma";
 import { ActivityField } from "./components/activity-field";
 import { MainInfo } from "./components/main-stats";
-import { SignOutButton } from "./components/sign-out-button";
 
 type Props = {
   params: {
@@ -13,6 +13,19 @@ export default async function AccountPage({ params }: Props) {
   const { username } = await params;
   const { data, error } = await getUserData(username);
 
+  if (!data?.id) {
+    return <p>Unexpected error: userId is not defined</p>;
+  }
+
+  const activities = await prisma.activity.findMany({
+    where: {
+      userDataId: data.id,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   if (!data || !data.stats || error) {
     return <div className="mt-10 flex w-full justify-center">User not found</div>;
   }
@@ -20,7 +33,7 @@ export default async function AccountPage({ params }: Props) {
   return (
     <div className="flex min-h-screen w-full flex-col gap-10 font-geist-mono">
       <MainInfo username={username} stats={data.stats} />
-      <ActivityField userId={data.id} />
+      <ActivityField activities={activities} />
     </div>
   );
 }
