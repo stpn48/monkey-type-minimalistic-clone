@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "@/utils/prisma";
-import { createClient, getUser } from "@/utils/supabase/server";
 import { Stats, UserData } from "@prisma/client";
 
 type GetUserDataResponse = {
