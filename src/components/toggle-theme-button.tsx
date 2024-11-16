@@ -4,6 +4,11 @@ import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 import { Select } from "./select";
 
+export type ThemeOption = {
+  value: string;
+  label: string;
+};
+
 const themes = [
   { value: "dark", label: "Dark" },
   { value: "light", label: "Light" },
@@ -14,7 +19,7 @@ const themes = [
 //TODO: rename this component
 export function ToggleThemeButton() {
   const [isMounted, setIsMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   const toggleTheme = useCallback(
     (value: string) => {
@@ -31,5 +36,5 @@ export function ToggleThemeButton() {
 
   if (!isMounted || !theme) return null;
 
-  return <Select options={themes} onValueChange={toggleTheme} defaultValue={theme} />;
+  return <Select options={themes} defaultValue={resolvedTheme} onValueChange={toggleTheme} />;
 }
