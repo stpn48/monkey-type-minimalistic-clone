@@ -49,7 +49,7 @@ export function getStatistics() {
     setMissedLetters(statistics.totalMissedLetters);
 
     const wpm = calculateWpm(totalWords, startedTypingTime!, finishedTypingTime!);
-    const duration = (finishedTypingTime! - startedTypingTime!) / 1000;
+    const duration = parseInt(((finishedTypingTime! - startedTypingTime!) / 1000).toFixed(0));
     const accuracy = calculateAccuracy(statistics.totalCorrectLetters, mistakes);
 
     setWpm(wpm);
@@ -58,7 +58,7 @@ export function getStatistics() {
 
     startUpdatingStats(async () => {
       const { error } = await updateUserStats({
-        wpm,
+        wpm: duration === 15 ? wpm : 0,
         totalWords,
         correctLetters: statistics.totalCorrectLetters,
         duration,
