@@ -2,6 +2,14 @@
 
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
+import { Select } from "./select";
+
+const themes = [
+  { value: "dark", label: "Dark" },
+  { value: "light", label: "Light" },
+  { value: "norse", label: "Norse" },
+  { value: "mountain", label: "Mountain" },
+];
 
 //TODO: rename this component
 export function ToggleThemeButton() {
@@ -9,9 +17,9 @@ export function ToggleThemeButton() {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
+    (value: string) => {
       if (isMounted) {
-        setTheme(e.target.value);
+        setTheme(value);
       }
     },
     [setTheme, isMounted],
@@ -23,10 +31,5 @@ export function ToggleThemeButton() {
 
   if (!isMounted || !theme) return null;
 
-  return (
-    <select className="bg-background" onChange={toggleTheme} value={theme}>
-      <option value="dark">Dark</option>
-      <option value="light">Light</option>
-    </select>
-  );
+  return <Select options={themes} onValueChange={toggleTheme} defaultValue={theme} />;
 }
