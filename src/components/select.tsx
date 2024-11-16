@@ -1,8 +1,8 @@
 "use client";
 
-import { set } from "lodash";
-import React, { HtmlHTMLAttributes, SelectHTMLAttributes, useEffect, useState } from "react";
+import { HtmlHTMLAttributes, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { ThemeOption } from "./toggle-theme-button";
 
 type Option = {
   value: string;
@@ -12,9 +12,8 @@ type Option = {
 type Props = {
   options: Option[];
   onValueChange?: (value: string) => void;
-  defaultValue?: string;
   openDownwards?: boolean;
-  buttonContent?: "value" | "label";
+  defaultValue?: string;
 } & HtmlHTMLAttributes<HTMLDivElement>;
 
 export function Select({
@@ -23,14 +22,13 @@ export function Select({
   onValueChange,
   openDownwards,
   defaultValue,
-  buttonContent = "label",
   ...props
 }: Props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [value, setValue] = useState(options[0]);
+  const [value, setValue] = useState(defaultValue || options[0].value);
 
   useEffect(() => {
-    if (onValueChange) onValueChange(value.value);
+    if (onValueChange) onValueChange(value);
   }, [value, onValueChange]);
 
   return (
@@ -39,7 +37,7 @@ export function Select({
         className={twMerge("rounded-lg border-foreground/60 bg-foreground px-4 py-2", className)}
         onClick={() => setDropdownOpen((prev) => !prev)}
       >
-        {buttonContent === "value" ? value.value : value.label}
+        {options.find((option) => option.value === value)?.label || value}
       </button>
 
       {dropdownOpen && (
@@ -62,7 +60,7 @@ export function Select({
                 key={optionIndex}
                 onClick={() => {
                   setDropdownOpen(false);
-                  setValue(option);
+                  setValue(option.value);
                 }}
                 className="cursor-pointer whitespace-nowrap rounded-md bg-foreground px-4 py-1 text-center hover:bg-background"
               >
