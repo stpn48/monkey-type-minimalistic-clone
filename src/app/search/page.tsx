@@ -1,19 +1,18 @@
-import { Input } from "@/components/input";
-import React from "react";
 import { ProfileSearch } from "./components/profile-search";
+import { TestsCompletedLeaderboard } from "./components/tests-completed-leaderboard";
+import { WpmLeaderboard } from "./components/wpm-leaderboard";
 
 type Props = {};
 
 export default function SearchProfilesPage({}: Props) {
   return (
-    <div className="fle flex-1 flex-col gap-4 font-geist-mono">
+    <div className="flex flex-1 flex-col gap-20 font-geist-mono">
       <section className="flex w-full justify-center">
         <ProfileSearch />
       </section>
-      <section className="ga-4 flex">
-        <section></section>
-        <section></section>
-        <section></section>
+      <section className="flex justify-between">
+        <WpmLeaderboard />
+        <TestsCompletedLeaderboard />
       </section>
     </div>
   );
