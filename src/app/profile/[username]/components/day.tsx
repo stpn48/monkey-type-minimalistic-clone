@@ -11,7 +11,7 @@ export function Day({ activityThisDay, dayDate }: Props) {
   return (
     <div
       className={twMerge(
-        "group relative size-3 overflow-visible rounded-sm",
+        "group relative size-4 overflow-visible rounded-sm",
         getColorStrength(activityThisDay?.testsCompleted || 0),
       )}
     >
