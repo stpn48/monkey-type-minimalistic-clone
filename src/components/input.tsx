@@ -23,13 +23,15 @@ export function Input({
   return (
     <div
       tabIndex={1}
-      className="relative flex w-[300px] rounded-lg bg-foreground px-4 py-2 text-text-primary focus:ring-1 focus:ring-primary"
+      className={twMerge(
+        "relative flex w-[300px] rounded-lg bg-foreground px-4 py-2 text-text-primary focus:ring-1 focus:ring-primary",
+        className,
+      )}
     >
       <input
         disabled={disabled}
         className={twMerge(
           "flex-grow bg-inherit placeholder-text outline-none",
-          className,
           disabled && "opacity-50",
         )}
         {...props}
