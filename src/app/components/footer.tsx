@@ -12,7 +12,7 @@ export function Footer() {
   return (
     <div
       className={twMerge(
-        "absolute bottom-8 left-0 flex w-screen items-center justify-between px-10 transition-opacity duration-300",
+        "absolute bottom-0 left-0 flex w-screen items-center justify-between rounded-t-lg bg-background px-10 py-8 transition-opacity duration-300",
         userTyping && "opacity-0",
       )}
     >
