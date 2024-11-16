@@ -24,4 +24,23 @@
     --incorrect-text: 0 33% 53%;
     --incorrect-text-overflow: 14 58% 19%;
   }
+
+  .norse {
+    --background: 240 1% 14%;
+    --foreground: 180 3% 19%;
+    --primary: 192 44% 29%;
+    --text: 193 8% 34%;
+    --text-primary: 36 21% 75%;
+    --incorrect-text: 359 62% 29%;
+    --incorrect-text-overflow: 359 62% 29%;
+  }
+  .mountain {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 10%;
+    --primary: 0 0% 100%;
+    --text: 0 0% 30%;
+    --text-primary: 0 0% 91%;
+    --incorrect-text: 0 16% 61%;
+    --incorrect-text-overflow: 0 27% 60%;
+  }
 }
