@@ -38,7 +38,33 @@ export default function RootLayout({
           <Footer />
 
           {/* TODO: Customize toaster styling */}
-          <Toaster />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              success: {
+                icon: "✅",
+                style: {
+                  fontFamily: "var(--font-geist-mono)",
+                  background: "#17ba0b",
+                  color: "white",
+                  borderColor: "#11c904",
+                  borderWidth: "3px",
+                  borderRadius: "10px",
+                },
+              },
+              error: {
+                icon: "❌",
+                style: {
+                  fontFamily: "var(--font-geist-mono)",
+                  background: "#a3150b",
+                  color: "white",
+                  borderColor: "#C02B1D",
+                  borderWidth: "3px",
+                  borderRadius: "10px",
+                },
+              },
+            }}
+          />
         </Providers>
       </body>
     </html>
