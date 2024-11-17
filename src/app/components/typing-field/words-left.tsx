@@ -1,9 +1,7 @@
 import { useConfigState } from "@/context/use-config-state";
 import { useStatisticsStore } from "@/context/use-statistics";
 
-type Props = {};
-
-export default function WordsLeft({}: Props) {
+export default function WordsLeft() {
   const { totalWords } = useStatisticsStore();
   const { wordCount } = useConfigState();
 
