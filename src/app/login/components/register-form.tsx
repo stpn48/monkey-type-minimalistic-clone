@@ -49,7 +49,7 @@ export function RegisterForm() {
     }
 
     startRegistering(async () => {
-      const { error, data } = await signUp(username, email, password);
+      const { error } = await signUp(username, email, password);
 
       if (error) {
         toast.error(error.message);

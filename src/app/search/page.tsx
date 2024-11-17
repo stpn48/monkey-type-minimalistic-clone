@@ -2,9 +2,7 @@ import { ProfileSearch } from "./components/profile-search";
 import { TestsCompletedLeaderboard } from "./components/tests-completed-leaderboard";
 import { WpmLeaderboard } from "./components/wpm-leaderboard";
 
-type Props = {};
-
-export default function SearchProfilesPage({}: Props) {
+export default function SearchProfilesPage() {
   return (
     <div className="flex flex-1 flex-col gap-20 font-geist-mono">
       <section className="flex w-full justify-center">

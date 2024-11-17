@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
@@ -7,7 +9,7 @@ export function usePreserveSearchParams() {
 
   const navigateWithParams = useCallback(
     (newPath: string, method: "push" | "replace" = "push") => {
-      const params = new URLSearchParams(searchParams as any);
+      const params = new URLSearchParams(searchParams);
 
       if (method === "push") {
         router.push(`${newPath}?${params.toString()}`);

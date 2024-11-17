@@ -3,10 +3,10 @@ import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
 import { calculateStatistics } from "@/utils/calculate-statistics";
-import { useEffect, useMemo, useReducer, useRef, useTransition } from "react";
+import { useEffect, useMemo, useRef, useTransition } from "react";
 import toast from "react-hot-toast";
 
-export function getStatistics() {
+export function useGetStatistics() {
   const {
     setCorrectLetters,
     setCorrectWords,
@@ -29,6 +29,7 @@ export function getStatistics() {
 
   const [updatingStats, startUpdatingStats] = useTransition();
 
+  console.log(updatingStats);
   const effectExecuted = useRef(false);
 
   useEffect(() => {

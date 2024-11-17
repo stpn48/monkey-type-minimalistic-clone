@@ -64,7 +64,16 @@ export function ConfigStateProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     resetTypingField();
     resetStatistics();
-  }, [mode, includePunctuation, includeNumbers, timeDuration, wordCount, quoteLength]);
+  }, [
+    mode,
+    includePunctuation,
+    includeNumbers,
+    timeDuration,
+    wordCount,
+    quoteLength,
+    resetTypingField,
+    resetStatistics,
+  ]);
 
   const value = useMemo(() => {
     return {

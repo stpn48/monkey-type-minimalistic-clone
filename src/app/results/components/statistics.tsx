@@ -4,11 +4,11 @@ import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { usePreserveSearchParams } from "@/hooks/use-preserve-search-params";
 import { useEffect } from "react";
-import { getStatistics } from "../hooks/get-statistics";
 import { Statistic } from "../../../components/statistic";
+import { useGetStatistics } from "../hooks/get-statistics";
 
 export function Statistics() {
-  getStatistics();
+  useGetStatistics();
 
   const { words, userWords } = useTypingField();
   const { navigateWithParams } = usePreserveSearchParams();

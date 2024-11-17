@@ -2,7 +2,6 @@
 
 import { HtmlHTMLAttributes, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { ThemeOption } from "./toggle-theme-button";
 
 type Option = {
   value: string;
@@ -16,14 +15,7 @@ type Props = {
   defaultValue?: string;
 } & HtmlHTMLAttributes<HTMLDivElement>;
 
-export function Select({
-  className,
-  options,
-  onValueChange,
-  openDownwards,
-  defaultValue,
-  ...props
-}: Props) {
+export function Select({ className, options, onValueChange, openDownwards, defaultValue }: Props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [value, setValue] = useState(defaultValue || options[0].value);
 

@@ -1,4 +1,5 @@
 import prisma from "@/utils/prisma";
+import Link from "next/link";
 
 export async function WpmLeaderboard() {
   const users = await prisma.userData.findMany({
@@ -24,15 +25,17 @@ export async function WpmLeaderboard() {
         ALL TIME WPM 15 SEC
       </h1>
       {users.map((user, userIndex) => (
-        <div
-          className={`${userIndex % 2 === 0 ? "bg-background/50" : "bg-foreground"} flex items-center justify-between gap-4 rounded-lg px-4 py-2`}
+        <Link
+          key={user.username}
+          href={`/profile/${user.username}`}
+          className={`${userIndex % 2 === 0 ? "bg-background/50" : "bg-foreground"} flex items-center justify-between gap-4 rounded-lg px-4 py-2 hover:bg-background`}
         >
           <div className="flex items-center gap-4">
             <h1 className="text-base">{userIndex + 1}.</h1>
             <h1>{user.username}</h1>
           </div>
           <p>{user.stats.allTimeWpm.toFixed(2).toString()} WPM</p>
-        </div>
+        </Link>
       ))}
     </section>
   );

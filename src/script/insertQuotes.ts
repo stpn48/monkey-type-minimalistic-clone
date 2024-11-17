@@ -2,61 +2,69 @@
 
 // const quotes = [
 //   {
-//     quote: "It is not the mountain we conquer but ourselves.",
-//     author: "Edmund Hillary",
-//     length: "medium",
-//   },
-//   {
-//     quote: "You miss 100% of the shots you don't take.",
-//     author: "Wayne Gretzky",
-//     length: "medium",
-//   },
-//   {
-//     quote: "Life isn't about finding yourself. Life is about creating yourself.",
-//     author: "George Bernard Shaw",
-//     length: "medium",
-//   },
-//   {
-//     quote:
-//       "The greatest glory in living lies not in never falling, but in rising every time we fall.",
-//     author: "Nelson Mandela",
-//     length: "long",
-//   },
-//   {
-//     quote: "Only those who dare to fail greatly can ever achieve greatly.",
-//     author: "Robert F. Kennedy",
-//     length: "medium",
-//   },
-//   {
-//     quote: "Do not wait to strike till the iron is hot; but make it hot by striking.",
-//     author: "William Butler Yeats",
-//     length: "medium",
-//   },
-//   {
-//     quote: "If you want to go fast, go alone. If you want to go far, go together.",
-//     author: "African Proverb",
-//     length: "medium",
-//   },
-//   {
-//     quote: "Believe you can and you're halfway there.",
-//     author: "Theodore Roosevelt",
-//     length: "medium",
-//   },
-//   {
-//     quote: "Happiness is not something ready made. It comes from your own actions.",
-//     author: "Dalai Lama",
-//     length: "medium",
-//   },
-//   {
-//     quote: "The only way to do great work is to love what you do.",
+//     quote: "Stay hungry. Stay foolish.",
 //     author: "Steve Jobs",
-//     length: "medium",
+//     length: "short",
 //   },
 //   {
-//     quote:
-//       "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
-//     author: "Ralph Waldo Emerson",
-//     length: "long",
+//     quote: "Dream big.",
+//     author: "Unknown",
+//     length: "short",
+//   },
+//   {
+//     quote: "Less is more.",
+//     author: "Ludwig Mies van der Rohe",
+//     length: "short",
+//   },
+//   {
+//     quote: "Seize the day.",
+//     author: "Horace",
+//     length: "short",
+//   },
+//   {
+//     quote: "Do it now.",
+//     author: "Unknown",
+//     length: "short",
+//   },
+//   {
+//     quote: "Keep moving forward.",
+//     author: "Walt Disney",
+//     length: "short",
+//   },
+//   {
+//     quote: "Actions speak louder.",
+//     author: "Proverb",
+//     length: "short",
+//   },
+//   {
+//     quote: "Think different.",
+//     author: "Apple",
+//     length: "short",
+//   },
+//   {
+//     quote: "Focus and win.",
+//     author: "Unknown",
+//     length: "short",
+//   },
+//   {
+//     quote: "Never give up.",
+//     author: "Winston Churchill",
+//     length: "short",
+//   },
+//   {
+//     quote: "Start. Finish.",
+//     author: "Unknown",
+//     length: "short",
+//   },
+//   {
+//     quote: "Believe in yourself.",
+//     author: "Unknown",
+//     length: "short",
+//   },
+//   {
+//     quote: "Turn ideas into action.",
+//     author: "Unknown",
+//     length: "short",
 //   },
 // ];
 

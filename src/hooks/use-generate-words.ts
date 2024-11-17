@@ -1,20 +1,18 @@
-import { Letter } from "@/app/components/typing-field/letter";
 import { useConfigState } from "@/context/use-config-state";
 import { useTypingField } from "@/context/use-typing-field";
 import { useCallback, useEffect } from "react";
-import { initInfiniteWordsHandler } from "./init-infinite-words-handler";
+import { useInitInfiniteWordsHandler } from "./use-init-infinite-words-handler";
 import { useDebouncedResize } from "./use-debounced-resize";
 import { useWordsGenerator } from "./use-words-generator";
 
 export function useGenerateWords() {
   const { mode, quoteLength, includeNumbers } = useConfigState();
-  const { resetTypingField, setWords, setTotalWordsGenerated, totalWordsGenerated } =
-    useTypingField();
+  const { resetTypingField, setWords, setTotalWordsGenerated } = useTypingField();
   const { wordCount } = useConfigState();
 
   const { generateWords, generateQuote, isLoading } = useWordsGenerator();
 
-  initInfiniteWordsHandler(includeNumbers, generateWords);
+  useInitInfiniteWordsHandler(includeNumbers, generateWords);
 
   const generateInitialWords = useCallback(() => {
     switch (mode) {

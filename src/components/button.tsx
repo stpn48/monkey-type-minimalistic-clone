@@ -6,6 +6,7 @@ type Props = {} & ButtonHTMLAttributes<HTMLButtonElement>;
 export function Button({ className, children, disabled, ...props }: Props) {
   return (
     <button
+      {...props}
       disabled={disabled}
       className={twMerge(
         "rounded-lg bg-text-primary px-4 py-2",

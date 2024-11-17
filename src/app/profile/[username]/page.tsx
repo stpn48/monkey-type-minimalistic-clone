@@ -4,9 +4,9 @@ import { ActivityField } from "./components/activity-field";
 import { MainInfo } from "./components/main-stats";
 
 type Props = {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 };
 
 export default async function AccountPage({ params }: Props) {
@@ -31,7 +31,7 @@ export default async function AccountPage({ params }: Props) {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col gap-10 font-geist-mono">
+    <div className="mt-6 flex h-full w-full flex-col gap-20 font-geist-mono">
       <MainInfo username={username} stats={data.stats} />
       <ActivityField activities={activities} />
     </div>

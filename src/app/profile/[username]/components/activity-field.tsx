@@ -1,17 +1,16 @@
 "use client";
 
-import { Select } from "@/components/select";
 import { Activity } from "@prisma/client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { generateWeeksForMonths } from "../utils/generate-weeks-for-moths";
 import { Week } from "./week";
 
-const monthOptions = [
-  { value: "12", label: "12 months" },
-  { value: "6", label: "6 months" },
-  { value: "3", label: "3 months" },
-  { value: "1", label: "1 month" },
-];
+// const monthOptions = [
+//   { value: "12", label: "12 months" },
+//   { value: "6", label: "6 months" },
+//   { value: "3", label: "3 months" },
+//   { value: "1", label: "1 month" },
+// ];
 
 type Props = {
   activities: Activity[];
@@ -22,18 +21,18 @@ type Week = {
 }[][];
 
 export function ActivityField({ activities }: Props) {
-  const [months, setMonths] = useState(12);
+  // const [months, setMonths] = useState(12);
   const [weeks, setWeeks] = useState<Week>([]);
 
   useEffect(() => {
-    const weeks = generateWeeksForMonths(months);
+    const weeks = generateWeeksForMonths(12);
     setWeeks(weeks);
-  }, [months]);
+  }, []);
 
   return (
-    <div className="flex justify-center gap-4 font-geist-mono">
+    <div className="mt-10 flex justify-center gap-4 font-geist-mono">
       {/* SELECT MONTHS */}
-      <Select options={monthOptions} onValueChange={(value) => setMonths(Number(value))} />
+      {/* <Select options={monthOptions} onValueChange={(value) => setMonths(Number(value))} /> */}
 
       {/* FIELD */}
       <div className="flex w-fit flex-col gap-4 rounded-lg bg-foreground p-4">

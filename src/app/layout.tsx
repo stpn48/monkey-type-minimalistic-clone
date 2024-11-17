@@ -1,7 +1,9 @@
 import { Header } from "@/app/components/header/header";
 import { Providers } from "@/components/providers";
+import { Loader2 } from "lucide-react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "./components/footer";
 import "./globals.css";
@@ -30,42 +32,45 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} relative flex min-h-screen w-screen flex-col bg-background px-20 pb-16 pt-[100px] font-geist-sans text-sm font-medium text-text ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} relative flex min-h-screen w-screen flex-col bg-background px-20 pb-[100px] pt-[100px] font-geist-sans text-sm font-medium text-text ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <Header />
-          {children}
-          <Footer />
+        <Suspense fallback={<Loader2 />}>
+          <Providers>
+            <Header />
+            {children}
+            <Footer />
 
-          {/* TODO: Customize toaster styling */}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              success: {
-                icon: "✅",
-                style: {
-                  fontFamily: "var(--font-geist-mono)",
-                  background: "#17ba0b",
-                  color: "white",
-                  borderColor: "#11c904",
-                  borderWidth: "3px",
-                  borderRadius: "10px",
+            {/* TODO: Customize toaster styling */}
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                success: {
+                  icon: "✅",
+                  style: {
+                    fontFamily: "var(--font-geist-mono)",
+                    background: "#17ba0b",
+                    color: "white",
+                    borderColor: "#11c904",
+                    borderWidth: "3px",
+                    borderRadius: "10px",
+                  },
                 },
-              },
-              error: {
-                icon: "❌",
-                style: {
-                  fontFamily: "var(--font-geist-mono)",
-                  background: "#a3150b",
-                  color: "white",
-                  borderColor: "#C02B1D",
-                  borderWidth: "3px",
-                  borderRadius: "10px",
+                duration: 500,
+                error: {
+                  icon: "❌",
+                  style: {
+                    fontFamily: "var(--font-geist-mono)",
+                    background: "#a3150b",
+                    color: "white",
+                    borderColor: "#C02B1D",
+                    borderWidth: "3px",
+                    borderRadius: "10px",
+                  },
                 },
-              },
-            }}
-          />
-        </Providers>
+              }}
+            />
+          </Providers>
+        </Suspense>
       </body>
     </html>
   );

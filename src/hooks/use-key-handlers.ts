@@ -52,7 +52,7 @@ export function useKeyHandlers() {
       });
       setActiveLetterIndex((prev) => prev + 1);
     },
-    [setUserWords, activeWordIndex, mode, startTimer, startedTypingTime],
+    [setUserWords, activeWordIndex, mode, startTimer, startedTypingTime, setUserTyping],
   );
 
   const handleSpaceKey = useCallback(() => {

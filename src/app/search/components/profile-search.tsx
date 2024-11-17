@@ -5,11 +5,9 @@ import { Input } from "@/components/input";
 import { LoaderPinwheel, Search } from "lucide-react";
 import Link from "next/link";
 import { useQueryState } from "nuqs";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 
-type Props = {};
-
-export function ProfileSearch({}: Props) {
+export function ProfileSearch() {
   const [query, setQuery] = useQueryState("query");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
