@@ -2,17 +2,19 @@ import { getQuote } from "@/app/actions/get-quote";
 import { QuoteLength } from "@/context/use-config-state";
 import { useTypingField } from "@/context/use-typing-field";
 import { generate as generateRandomWords } from "random-words";
-import { useCallback, useTransition } from "react";
+import { useCallback, useState } from "react";
 
 export function useWordsGenerator() {
   const { fieldWidth, setWords } = useTypingField();
 
-  const [isLoading, startLoading] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
 
   const generateWords = useCallback(
     (wordCount?: number, includeNumbers?: boolean) => {
       // this function always return maximum of 3 rows of words.
       if (!fieldWidth) return [];
+
+      setIsLoading(true);
 
       const wordWidthPx = 19;
       const maxRows = 3;
@@ -48,23 +50,25 @@ export function useWordsGenerator() {
         if (wordCount !== 0 && wordsGenerated === wordCount) break;
       }
 
+      setIsLoading(false);
       return newWords; // Update state with the accumulated words
     },
     [fieldWidth],
   );
 
-  const generateQuote = useCallback((quoteLength: QuoteLength) => {
+  const generateQuote = useCallback(async (quoteLength: QuoteLength) => {
     setWords([]);
-    startLoading(async () => {
-      const quote = await getQuote(quoteLength);
 
-      if (!quote) {
-        console.error("No quote found");
-        return;
-      }
+    setIsLoading(true);
+    const quote = await getQuote(quoteLength);
 
-      setWords([...quote.quote.split(" ")]);
-    });
+    if (!quote) {
+      console.error("No quote found");
+      return;
+    }
+
+    setWords([...quote.quote.split(" ")]);
+    setIsLoading(false);
   }, []);
 
   return { generateWords, generateQuote, isLoading };
