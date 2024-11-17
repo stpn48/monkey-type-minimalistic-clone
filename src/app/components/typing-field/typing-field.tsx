@@ -3,13 +3,12 @@
 import { Caret } from "@/app/components/typing-field/caret";
 import { Word } from "@/app/components/typing-field/word";
 import { useConfigState } from "@/context/use-config-state";
-import { useStatisticsStore } from "@/context/use-statistics";
 import { useTypingField } from "@/context/use-typing-field";
 import { useContainerWidth } from "@/hooks/use-contaier-width";
 import { useGameLogic } from "@/hooks/use-game-logic";
 import { useGenerateWords } from "@/hooks/use-generate-words";
-import { LoaderPinwheel } from "lucide-react";
-import React, { useEffect } from "react";
+import { Loader2, LoaderPinwheel } from "lucide-react";
+import React, { Suspense } from "react";
 
 const CapsLockAlert = React.lazy(() => import("@/app/components/caps-lock-alert"));
 const Timer = React.lazy(() => import("@/app/components/typing-field/timer"));
@@ -34,7 +33,7 @@ export function TypingField() {
   }
 
   return (
-    <>
+    <Suspense fallback={<Loader2 />}>
       <div className="relative flex h-[80px] items-center">
         {mode === "time" && startTimer && <Timer />}
         {mode === "wordCount" && userTyping && <WordsLeft />}
@@ -53,6 +52,6 @@ export function TypingField() {
           />
         ))}
       </div>
-    </>
+    </Suspense>
   );
 }
