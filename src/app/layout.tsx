@@ -1,6 +1,5 @@
 import { Header } from "@/app/components/header/header";
 import { Providers } from "@/components/providers";
-import { Loader2 } from "lucide-react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Suspense } from "react";
@@ -34,7 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} relative flex min-h-screen w-screen flex-col bg-background px-20 pb-[100px] pt-[100px] font-geist-sans text-sm font-medium text-text ${geistMono.variable} antialiased`}
       >
-        <Suspense fallback={<Loader2 />}>
+        <Suspense fallback={<></>}>
           <Providers>
             <Header />
             {children}
