@@ -33,7 +33,7 @@ export default function Timer() {
       setFinishedTypingTime(new Date().getTime());
       navigateWithParams("/results", "replace");
     }
-  }, [time, navigateWithParams, intervalId]);
+  }, [time, navigateWithParams, intervalId, setFinishedTypingTime]);
 
   useEffect(() => {
     setTime(timeDuration);
