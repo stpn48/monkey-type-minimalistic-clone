@@ -2,7 +2,7 @@
 
 import prisma from "@/utils/prisma";
 import { createClient } from "@/utils/supabase/server";
-import { Session, User } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 
 type SignUpResponse = {
   error: null | Error;
