@@ -1,4 +1,4 @@
-import { Loader2, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import { Suspense } from "react";
 import { HeaderContainer } from "./header-container";
 import { LogoButton } from "./logo-button";
@@ -7,7 +7,7 @@ import { UserButton } from "./user-button";
 
 export function Header() {
   return (
-    <Suspense fallback={<Loader2 />}>
+    <Suspense fallback={<></>}>
       <HeaderContainer>
         <LogoButton />
 
