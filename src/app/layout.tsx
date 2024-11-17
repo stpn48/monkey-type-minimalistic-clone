@@ -54,7 +54,6 @@ export default function RootLayout({
                     borderRadius: "10px",
                   },
                 },
-                duration: 500,
                 error: {
                   icon: "❌",
                   style: {
